@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const sequelize = require("./config/database");
 const authRoutes = require("./routes/auth");
 const patientRoutes = require("./routes/patient");
@@ -13,6 +14,17 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
+// CORS Configuration
+app.use(
+  cors({
+    origin: [
+      "https://https://thesis24.vercel.app/", // Replace with your Vercel domain
+      "http://localhost:3000", // For local development
+    ],
+    credentials: true,
+  })
+);
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/patient", patientRoutes);
@@ -23,5 +35,5 @@ app.use("/api/lab", labRoutes);
 app.use("/api/admin", adminRoutes);
 
 sequelize.sync({ alter: true }).then(() => {
-  app.listen(5000, () => console.log("Server running on http://localhost:5000"));
+  app.listen(5000, () => console.log("Server running on port 5000"));
 });
