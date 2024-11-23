@@ -8,3 +8,4 @@ router.get("/:id", patientController.getPatientById);
 router.post("/", patientController.createPatient);
 
 module.exports = router;
+s
