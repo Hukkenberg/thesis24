@@ -1,18 +1,7 @@
-const User = require("../models/User");
-
-exports.getUsers = async (req, res) => {
-  const users = await User.findAll();
-  res.json(users);
-};
-
-exports.createUser = async (req, res) => {
-  const { username, email, role, password } = req.body;
-  const newUser = await User.create({ username, email, role, password });
-  res.json(newUser);
-};
-
-exports.deleteUser = async (req, res) => {
-  const { id } = req.params;
-  await User.destroy({ where: { id } });
-  res.json({ message: "Xóa người dùng thành công." });
+exports.getDashboardData = async (req, res) => {
+  try {
+    res.status(200).json({ message: "Admin dashboard data" });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching admin dashboard data", error });
+  }
 };
