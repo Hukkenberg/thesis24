@@ -14,18 +14,16 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 
-// CORS Configuration
 app.use(
   cors({
     origin: [
-      "https://https://thesis24.vercel.app/", // Replace with your Vercel domain
-      "http://localhost:3000", // For local development
+      "https://thesis24.vercel.app",
+      "http://localhost:3000",
     ],
     credentials: true,
   })
 );
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/patient", patientRoutes);
 app.use("/api/doctor", doctorRoutes);

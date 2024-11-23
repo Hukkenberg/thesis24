@@ -5,6 +5,10 @@ const User = require("../models/User");
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined in the environment variables.");
+    }
+
     const user = await User.findOne({ where: { username } });
     if (!user) return res.status(404).json({ message: "Người dùng không tồn tại." });
 

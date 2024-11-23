@@ -1,34 +1,11 @@
-import { useEffect, useState } from "react";
-import api from "../../utils/api";
-import DoctorPatientList from "../../components/DoctorPatientList";
-import AppointmentManager from "../../components/AppointmentManager";
-import ProgressTracker from "../../components/ProgressTracker";
+import Navbar from "../../components/Navbar";
 
 export default function DoctorDashboard() {
-  const [patients, setPatients] = useState([]);
-  const [appointments, setAppointments] = useState([]);
-
-  useEffect(() => {
-    fetchPatients();
-    fetchAppointments();
-  }, []);
-
-  const fetchPatients = async () => {
-    const { data } = await api.get("/doctor/patients");
-    setPatients(data);
-  };
-
-  const fetchAppointments = async () => {
-    const { data } = await api.get("/doctor/appointments");
-    setAppointments(data);
-  };
-
   return (
     <div>
-      <h1>Dashboard Bác Sĩ</h1>
-      <DoctorPatientList patients={patients} />
-      <AppointmentManager appointments={appointments} />
-      <ProgressTracker onUpdate={fetchPatients} />
+      <Navbar />
+      <h1>Doctor Dashboard</h1>
+      <p>Welcome, Doctor. View and manage your patients here.</p>
     </div>
   );
 }

@@ -1,23 +1,11 @@
-import { useEffect, useState } from "react";
-import api from "../../utils/api";
-import LabTestManager from "../../components/LabTestManager";
+import Navbar from "../../components/Navbar";
 
 export default function LabDashboard() {
-  const [labTests, setLabTests] = useState([]);
-
-  useEffect(() => {
-    fetchLabTests();
-  }, []);
-
-  const fetchLabTests = async () => {
-    const { data } = await api.get("/lab/tests");
-    setLabTests(data);
-  };
-
   return (
     <div>
-      <h1>Dashboard Nhân Viên Xét Nghiệm</h1>
-      <LabTestManager labTests={labTests} onRefresh={fetchLabTests} />
+      <Navbar />
+      <h1>Lab Dashboard</h1>
+      <p>Welcome to the lab management panel. Manage and process lab tests here.</p>
     </div>
   );
 }

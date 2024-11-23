@@ -16,7 +16,7 @@ const User = sequelize.define("User", {
     allowNull: false,
   },
   role: {
-    type: DataTypes.ENUM("patient", "doctor", "admin"), // Enum cho PostgreSQL
+    type: DataTypes.ENUM("patient", "doctor", "admin", "lab"),
     allowNull: false,
   },
 });
