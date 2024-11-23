@@ -1,0 +1,10 @@
+
+.progress {
+  text-align: center;
+  padding: 20px;
+}
+
+canvas {
+  max-width: 600px;
+  margin: auto;
+}
