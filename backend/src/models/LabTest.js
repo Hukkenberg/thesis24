@@ -1,7 +1,12 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const LabTest = sequelize.define("LabTest", {
+const LabTest = sequelize.define('LabTest', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   patientId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -17,7 +22,17 @@ const LabTest = sequelize.define("LabTest", {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "pending", // pending, completed
+    defaultValue: 'pending',
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
 });
 

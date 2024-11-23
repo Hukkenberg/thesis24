@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const Patient = sequelize.define("Patient", {
+const Patient = sequelize.define('Patient', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,7 +17,7 @@ const Patient = sequelize.define("Patient", {
   },
   dob: {
     type: DataTypes.DATE,
-    allowNull: false,
+    allowNull: true,
   },
   address: {
     type: DataTypes.STRING,
@@ -26,6 +26,16 @@ const Patient = sequelize.define("Patient", {
   phone: {
     type: DataTypes.STRING,
     allowNull: true,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
 });
 

@@ -1,21 +1,20 @@
-const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models/User");
+const { Users } = require("../models");
 
-const router = express.Router();
-
-router.post("/login", async (req, res) => {
+exports.login = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { username } });
+    const user = await Users.findOne({ where: { username } });
+
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
@@ -25,11 +24,9 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1d" }
     );
 
-    return res.json({ token, role: user.role });
+    res.json({ token, role: user.role });
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.error("Login Error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-});
-
-module.exports = router;
+};
