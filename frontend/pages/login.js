@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "../utils/api";
 
 export default function Login() {
@@ -9,33 +9,41 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("/auth/login", formData);
+
+      // Store token and role
       if (typeof window !== "undefined") {
-        typeof window !== 'undefined' && localStorage.setItem("token", res.data.token);
-        typeof window !== 'undefined' && localStorage.setItem("role", res.data.role);
-        window.location.href = "/";
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+
+        // Redirect based on role
+        const role = res.data.role;
+        if (role === "admin") window.location.href = "/dashboard/admin";
+        else if (role === "doctor") window.location.href = "/dashboard/doctor";
+        else if (role === "lab") window.location.href = "/dashboard/lab";
+        else if (role === "patient") window.location.href = "/dashboard/patient";
       }
     } catch (err) {
-      setError("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.");
+      setError("Login failed. Please check your credentials.");
     }
   };
 
   return (
     <div>
-      <h1>Đăng nhập</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Tên tài khoản"
+          placeholder="Username"
           value={formData.username}
           onChange={(e) => setFormData({ ...formData, username: e.target.value })}
         />
         <input
           type="password"
-          placeholder="Mật khẩu"
+          placeholder="Password"
           value={formData.password}
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         />
-        <button type="submit">Đăng nhập</button>
+        <button type="submit">Login</button>
         {error && <p>{error}</p>}
       </form>
     </div>

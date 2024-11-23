@@ -5,7 +5,7 @@ export default function AdminDashboard() {
     <div>
       <Navbar />
       <h1>Admin Dashboard</h1>
-      <p>Welcome to the admin panel. Manage users, view reports, and configure the system.</p>
+      <p>Manage users, view reports, and configure settings here.</p>
     </div>
   );
 }
