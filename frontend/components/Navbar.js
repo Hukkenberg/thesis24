@@ -7,7 +7,7 @@ export default function Navbar() {
   useEffect(() => {
     // Ensuring localStorage access is only on the client side
     if (typeof window !== "undefined") {
-      setRole(localStorage.getItem("role"));
+      setRole(typeof window !== 'undefined' && localStorage.getItem("role"));
     }
   }, []);
 

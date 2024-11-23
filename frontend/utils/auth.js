@@ -1,17 +1,17 @@
 export function isAuthenticated() {
   if (typeof window === "undefined") return false;
-  return !!localStorage.getItem("token");
+  return !!typeof window !== 'undefined' && localStorage.getItem("token");
 }
 
 export function logout() {
   if (typeof window !== "undefined") {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    typeof window !== 'undefined' && localStorage.removeItem("token");
+    typeof window !== 'undefined' && localStorage.removeItem("role");
     window.location.href = "/";
   }
 }
 
 export function getRole() {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("role");
+  return typeof window !== 'undefined' && localStorage.getItem("role");
 }

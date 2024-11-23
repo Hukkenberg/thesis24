@@ -10,8 +10,8 @@ export default function Login() {
     try {
       const res = await axios.post("/auth/login", formData);
       if (typeof window !== "undefined") {
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("role", res.data.role);
+        typeof window !== 'undefined' && localStorage.setItem("token", res.data.token);
+        typeof window !== 'undefined' && localStorage.setItem("role", res.data.role);
         window.location.href = "/";
       }
     } catch (err) {
