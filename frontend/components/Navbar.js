@@ -5,6 +5,7 @@ export default function Navbar() {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
+    // Ensuring localStorage access is only on the client side
     if (typeof window !== "undefined") {
       setRole(localStorage.getItem("role"));
     }
@@ -25,14 +26,14 @@ export default function Navbar() {
   return (
     <nav style={styles.navbar}>
       <div style={styles.logo}>
-        <h1>Hệ thống Y Tế</h1>
+        <h1>Hệ Thống Y Tế</h1>
       </div>
-      <div style={styles.links}>
+      <div style={styles.navLinks}>
         <button style={styles.button} onClick={handleDashboardRedirect}>
           Dashboard
         </button>
         <button style={styles.logoutButton} onClick={logout}>
-          Đăng xuất
+          Đăng Xuất
         </button>
       </div>
     </nav>
@@ -44,36 +45,42 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "10px 20px",
+    padding: "15px 20px",
     backgroundColor: "#007BFF",
     color: "white",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontFamily: "'Roboto', sans-serif",
   },
   logo: {
-    fontSize: "1.5rem",
+    fontSize: "1.8rem",
     fontWeight: "bold",
+    color: "white",
   },
-  links: {
+  navLinks: {
     display: "flex",
     alignItems: "center",
-    gap: "10px",
+    gap: "15px",
   },
   button: {
     backgroundColor: "white",
     color: "#007BFF",
-    padding: "8px 15px",
+    padding: "10px 15px",
     borderRadius: "5px",
     border: "none",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "1rem",
+    transition: "0.3s ease",
   },
   logoutButton: {
     backgroundColor: "#DC3545",
     color: "white",
-    padding: "8px 15px",
+    padding: "10px 15px",
     borderRadius: "5px",
     border: "none",
     cursor: "pointer",
     fontWeight: "bold",
+    fontSize: "1rem",
+    transition: "0.3s ease",
   },
 };

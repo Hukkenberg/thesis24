@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../utils/api";
 
 export default function Login() {
@@ -9,9 +9,11 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await axios.post("/auth/login", formData);
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("role", res.data.role);
-      window.location.href = "/";
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+        window.location.href = "/";
+      }
     } catch (err) {
       setError("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.");
     }
