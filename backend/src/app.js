@@ -2,8 +2,11 @@ const express = require("express");
 const sequelize = require("./config/database");
 const authRoutes = require("./routes/auth");
 const patientRoutes = require("./routes/patient");
+const doctorRoutes = require("./routes/doctor");
 const userRoutes = require("./routes/users");
 const fileRoutes = require("./routes/files");
+const labRoutes = require("./routes/lab");
+const adminRoutes = require("./routes/admin");
 
 require("dotenv").config();
 
@@ -13,8 +16,11 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/patient", patientRoutes);
+app.use("/api/doctor", doctorRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/files", fileRoutes);
+app.use("/api/lab", labRoutes);
+app.use("/api/admin", adminRoutes);
 
 sequelize.sync({ alter: true }).then(() => {
   app.listen(5000, () => console.log("Server running on http://localhost:5000"));

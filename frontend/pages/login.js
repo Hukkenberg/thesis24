@@ -10,7 +10,8 @@ export default function Login() {
     try {
       const res = await axios.post("/auth/login", formData);
       localStorage.setItem("token", res.data.token);
-      window.location.href = "/dashboard"; // Điều hướng sau khi đăng nhập
+      localStorage.setItem("role", res.data.role);
+      window.location.href = "/";
     } catch (err) {
       setError("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.");
     }
