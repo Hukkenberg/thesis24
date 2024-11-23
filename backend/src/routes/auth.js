@@ -1,32 +1,9 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { Users } = require("../models");
+const express = require("express");
+const { login, logout } = require("../controllers/authController");
 
-exports.login = async (req, res) => {
-  const { username, password } = req.body;
+const router = express.Router();
 
-  try {
-    const user = await Users.findOne({ where: { username } });
+router.post("/login", login);
+router.post("/logout", logout);
 
-    if (!user) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const token = jwt.sign(
-      { id: user.id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-
-    res.json({ token, role: user.role });
-  } catch (error) {
-    console.error("Login Error:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
+module.exports = router;

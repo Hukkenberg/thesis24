@@ -1,10 +1,11 @@
 const express = require("express");
-const { uploadFile, downloadFile } = require("../controllers/fileController");
+const { uploadFile, getFiles, deleteFile } = require("../controllers/fileController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.post("/upload", authMiddleware, uploadFile);
-router.get("/download/:id", authMiddleware, downloadFile);
+router.post("/", authMiddleware, uploadFile);
+router.get("/", authMiddleware, getFiles);
+router.delete("/:id", authMiddleware, deleteFile);
 
 module.exports = router;

@@ -1,11 +1,17 @@
 const express = require("express");
-const { getUsers, createUser, deleteUser } = require("../controllers/adminController");
+const {
+  createDoctor,
+  deleteDoctor,
+  createLabStaff,
+  deleteLabStaff,
+} = require("../controllers/adminController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-router.get("/users", authMiddleware, getUsers);
-router.post("/users", authMiddleware, createUser);
-router.delete("/users/:id", authMiddleware, deleteUser);
+router.post("/doctor", authMiddleware, createDoctor);
+router.delete("/doctor/:id", authMiddleware, deleteDoctor);
+router.post("/lab-staff", authMiddleware, createLabStaff);
+router.delete("/lab-staff/:id", authMiddleware, deleteLabStaff);
 
 module.exports = router;
