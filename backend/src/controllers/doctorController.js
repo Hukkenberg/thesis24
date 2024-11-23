@@ -1,32 +1,37 @@
 const Doctor = require("../models/Doctor");
-const Patient = require("../models/Patient");
-const Appointment = require("../models/Appointment");
-const Progress = require("../models/Progress");
 
-exports.getPatients = async (req, res) => {
-  try {
-    const patients = await Patient.findAll({ where: { doctorId: req.user.id } });
-    res.json(patients);
-  } catch (err) {
-    res.status(500).json({ message: "Lỗi hệ thống." });
-  }
+exports.getAllDoctors = async (req, res) => {
+  const doctors = await Doctor.findAll();
+  res.status(200).json(doctors);
 };
 
-exports.getAppointments = async (req, res) => {
-  try {
-    const appointments = await Appointment.findAll({ where: { doctorId: req.user.id } });
-    res.json(appointments);
-  } catch (err) {
-    res.status(500).json({ message: "Lỗi hệ thống." });
+exports.getDoctorById = async (req, res) => {
+  const doctor = await Doctor.findByPk(req.params.id);
+  if (!doctor) {
+    return res.status(404).json({ message: "Doctor not found" });
   }
+  res.status(200).json(doctor);
 };
 
-exports.updateProgress = async (req, res) => {
-  try {
-    const { patientId, details } = req.body;
-    await Progress.create({ patientId, details, date: new Date() });
-    res.json({ message: "Cập nhật tiến triển thành công." });
-  } catch (err) {
-    res.status(500).json({ message: "Lỗi hệ thống." });
+exports.createDoctor = async (req, res) => {
+  const doctor = await Doctor.create(req.body);
+  res.status(201).json(doctor);
+};
+
+exports.updateDoctor = async (req, res) => {
+  const doctor = await Doctor.findByPk(req.params.id);
+  if (!doctor) {
+    return res.status(404).json({ message: "Doctor not found" });
   }
+  await doctor.update(req.body);
+  res.status(200).json(doctor);
+};
+
+exports.deleteDoctor = async (req, res) => {
+  const doctor = await Doctor.findByPk(req.params.id);
+  if (!doctor) {
+    return res.status(404).json({ message: "Doctor not found" });
+  }
+  await doctor.destroy();
+  res.status(204).send();
 };
