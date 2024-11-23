@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "https://thesis24.onrender.com", // Thay đường dẫn nếu cần
-  headers: { Authorization: `Bearer ${typeof window !== 'undefined' && localStorage.getItem("token")}` },
+const instance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-export default api;
+export default instance;

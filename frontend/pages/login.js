@@ -10,17 +10,16 @@ export default function Login() {
     try {
       const res = await axios.post("/auth/login", formData);
 
-      // Store token and role
+      // Store the token and role
       if (typeof window !== "undefined") {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("role", res.data.role);
 
         // Redirect based on role
-        const role = res.data.role;
-        if (role === "admin") window.location.href = "/dashboard/admin";
-        else if (role === "doctor") window.location.href = "/dashboard/doctor";
-        else if (role === "lab") window.location.href = "/dashboard/lab";
-        else if (role === "patient") window.location.href = "/dashboard/patient";
+        if (res.data.role === "admin") window.location.href = "/dashboard/admin";
+        else if (res.data.role === "doctor") window.location.href = "/dashboard/doctor";
+        else if (res.data.role === "lab") window.location.href = "/dashboard/lab";
+        else if (res.data.role === "patient") window.location.href = "/dashboard/patient";
       }
     } catch (err) {
       setError("Login failed. Please check your credentials.");
