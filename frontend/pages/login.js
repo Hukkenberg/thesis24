@@ -3,6 +3,7 @@ import axios from "../utils/api";
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -39,26 +40,29 @@ export default function Login() {
             }
             style={styles.input}
           />
-          <input
-            type="password"
-            placeholder="PASSWORD"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            style={styles.input}
-          />
+          <div style={styles.passwordContainer}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="PASSWORD"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              style={styles.input}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={styles.showPasswordButton}
+            >
+              {showPassword ? "Hide" : "Show"}
+            </button>
+          </div>
           <button type="submit" style={styles.submitButton}>
             Sign in
           </button>
           {error && <p style={styles.error}>{error}</p>}
         </form>
-        <div style={styles.footer}>
-          <span>Can't sign in? </span>
-          <a href="/register" style={styles.link}>
-            Create an account
-          </a>
-        </div>
       </div>
     </div>
   );
@@ -66,8 +70,7 @@ export default function Login() {
 
 const styles = {
   container: {
-    background: "url('/background.jpg') no-repeat center center fixed",
-    backgroundSize: "cover",
+    backgroundColor: "#d1e7ff", // Pastel blue
     height: "100vh",
     display: "flex",
     justifyContent: "center",
@@ -96,6 +99,22 @@ const styles = {
     fontSize: "16px",
     borderRadius: "5px",
     border: "1px solid #ddd",
+    width: "100%",
+  },
+  passwordContainer: {
+    position: "relative",
+    width: "100%",
+  },
+  showPasswordButton: {
+    position: "absolute",
+    right: "10px",
+    top: "50%",
+    transform: "translateY(-50%)",
+    background: "none",
+    border: "none",
+    color: "#0070f3",
+    cursor: "pointer",
+    fontSize: "14px",
   },
   submitButton: {
     padding: "10px",
@@ -109,13 +128,5 @@ const styles = {
   error: {
     color: "red",
     marginTop: "10px",
-  },
-  footer: {
-    marginTop: "20px",
-    fontSize: "14px",
-  },
-  link: {
-    color: "#0070f3",
-    textDecoration: "none",
   },
 };
