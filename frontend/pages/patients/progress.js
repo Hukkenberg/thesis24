@@ -35,7 +35,7 @@ const Progress = () => {
   return (
     <div className={styles.progress}>
       <h1>Progress</h1>
-      <canvas id="progressChart"></canvas>
+      <canvas id="progressChart" className={styles.progressCanvas}></canvas>
     </div>
   );
 };

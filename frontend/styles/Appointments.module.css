@@ -1,16 +1,10 @@
 
-.appointments {
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-}
-
-ul {
+.appointmentsList {
   list-style-type: none;
   padding: 0;
 }
 
-li {
+.appointmentsListItem {
   margin: 10px 0;
   padding: 10px;
   border: 1px solid #ddd;
@@ -20,7 +14,7 @@ li {
   align-items: center;
 }
 
-button {
+.cancelButton {
   background-color: #ff4d4d;
   color: white;
   border: none;
@@ -29,6 +23,6 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.cancelButton:hover {
   background-color: #cc0000;
 }

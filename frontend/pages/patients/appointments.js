@@ -9,7 +9,7 @@ const Appointments = () => {
     fetch("/api/schedule")
       .then((res) => res.json())
       .then((data) => setAppointments(data))
-      .catch((err) => alert("Error fetching appointments"));
+      .catch(() => alert("Error fetching appointments"));
   }, []);
 
   const cancelAppointment = (id) => {
@@ -28,11 +28,16 @@ const Appointments = () => {
   return (
     <div className={styles.appointments}>
       <h1>Manage Appointments</h1>
-      <ul>
+      <ul className={styles.appointmentsList}>
         {appointments.map((appt) => (
-          <li key={appt.id}>
+          <li className={styles.appointmentsListItem} key={appt.id}>
             {appt.date} - {appt.status}
-            <button onClick={() => cancelAppointment(appt.id)}>Cancel</button>
+            <button
+              className={styles.cancelButton}
+              onClick={() => cancelAppointment(appt.id)}
+            >
+              Cancel
+            </button>
           </li>
         ))}
       </ul>

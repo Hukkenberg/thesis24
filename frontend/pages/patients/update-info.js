@@ -24,14 +24,15 @@ const UpdateInfo = () => {
       body: JSON.stringify(patientInfo),
     })
       .then((res) => res.json())
-      .then((data) => alert("Info updated successfully"))
-      .catch((err) => alert("Error updating info"));
+      .then(() => alert("Info updated successfully"))
+      .catch(() => alert("Error updating info"));
   };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <h1>Update Patient Information</h1>
       <input
+        className={styles.inputField}
         type="text"
         name="name"
         placeholder="Name"
@@ -39,6 +40,7 @@ const UpdateInfo = () => {
         onChange={handleChange}
       />
       <input
+        className={styles.inputField}
         type="date"
         name="dob"
         placeholder="Date of Birth"
@@ -46,6 +48,7 @@ const UpdateInfo = () => {
         onChange={handleChange}
       />
       <input
+        className={styles.inputField}
         type="text"
         name="gender"
         placeholder="Gender"
@@ -53,6 +56,7 @@ const UpdateInfo = () => {
         onChange={handleChange}
       />
       <input
+        className={styles.inputField}
         type="text"
         name="address"
         placeholder="Address"
@@ -60,6 +64,7 @@ const UpdateInfo = () => {
         onChange={handleChange}
       />
       <input
+        className={styles.inputField}
         type="text"
         name="contact_info"
         placeholder="Contact Info"
@@ -67,12 +72,15 @@ const UpdateInfo = () => {
         onChange={handleChange}
       />
       <textarea
+        className={styles.textAreaField}
         name="clinical_info"
         placeholder="Clinical Information"
         value={patientInfo.clinical_info}
         onChange={handleChange}
       />
-      <button type="submit">Save Information</button>
+      <button className={styles.submitButton} type="submit">
+        Save Information
+      </button>
     </form>
   );
 };

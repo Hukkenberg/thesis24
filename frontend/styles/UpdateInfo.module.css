@@ -11,20 +11,20 @@
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-input, textarea, button {
+.inputField, .textAreaField, .submitButton {
   padding: 10px;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 
-button {
+.submitButton {
   background-color: #0070f3;
   color: white;
   border: none;
   cursor: pointer;
 }
 
-button:hover {
+.submitButton:hover {
   background-color: #005bb5;
 }
