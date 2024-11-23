@@ -1,15 +1,10 @@
 const express = require("express");
-const {
-  getLabTests,
-  createLabTest,
-  updateLabTest,
-} = require("../controllers/labController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const labController = require("../controllers/labController");
 
 const router = express.Router();
 
-router.get("/", authMiddleware, getLabTests);
-router.post("/", authMiddleware, createLabTest);
-router.put("/:id", authMiddleware, updateLabTest);
+router.post("/create", labController.createLabTest);
+router.get("/:id", labController.getLabTestById);
+router.get("/", labController.getAllLabTests);
 
 module.exports = router;

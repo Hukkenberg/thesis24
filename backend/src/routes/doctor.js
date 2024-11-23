@@ -1,17 +1,10 @@
 const express = require("express");
-const {
-  getDoctorInfo,
-  updateDoctorInfo,
-  getPatients,
-  addProgress,
-} = require("../controllers/doctorController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const doctorController = require("../controllers/doctorController");
 
 const router = express.Router();
 
-router.get("/info", authMiddleware, getDoctorInfo);
-router.put("/info", authMiddleware, updateDoctorInfo);
-router.get("/patients", authMiddleware, getPatients);
-router.post("/progress", authMiddleware, addProgress);
+router.get("/:id", doctorController.getDoctorById);
+router.post("/", doctorController.createDoctor);
+router.get("/", doctorController.getAllDoctors);
 
 module.exports = router;

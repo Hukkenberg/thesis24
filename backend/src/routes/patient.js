@@ -1,17 +1,10 @@
 const express = require("express");
-const {
-  getPatientInfo,
-  updatePatientInfo,
-  getProgress,
-  getAppointments,
-} = require("../controllers/patientController");
-const authMiddleware = require("../middlewares/authMiddleware");
+const patientController = require("../controllers/patientController");
 
 const router = express.Router();
 
-router.get("/info", authMiddleware, getPatientInfo);
-router.put("/info", authMiddleware, updatePatientInfo);
-router.get("/progress", authMiddleware, getProgress);
-router.get("/appointments", authMiddleware, getAppointments);
+router.post("/", patientController.createPatient);
+router.get("/:id", patientController.getPatientById);
+router.get("/", patientController.getAllPatients);
 
 module.exports = router;
