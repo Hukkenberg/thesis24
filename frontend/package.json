@@ -1,20 +1,17 @@
 
 {
-    "name": "nextjs-frontend",
-    "version": "1.0.0",
-    "description": "Next.js frontend application for the healthcare system",
-    "main": "index.js",
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start"
-    },
-    "dependencies": {
-        "next": "^13.0.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "chart.js": "^4.0.0"
-    },
-    "author": "Your Name",
-    "license": "ISC"
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "Hospital Management System frontend with Next.js",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "^13.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }
