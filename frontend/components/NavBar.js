@@ -1,14 +1,27 @@
-import React from 'react';
+import Link from 'next/link';
+import styles from '../styles/Navbar.module.css';
 
 const Navbar = () => {
   return (
-    <div className="flex bg-green-200 justify-between p-4">
-      <div className="flex space-x-4">
-        <button className="bg-green-300 px-4 py-2">Home</button>
-        <button className="bg-green-300 px-4 py-2">Manage Info</button>
-      </div>
-      <button className="bg-yellow-300 px-4 py-2">Account</button>
-    </div>
+    <header className={styles.navbar}>
+      <h1>Hospital Management System</h1>
+      <nav>
+        <ul className={styles.navLinks}>
+          <li>
+            <Link href="/doctor">Doctor Dashboard</Link>
+          </li>
+          <li>
+            <Link href="/lab">Lab Dashboard</Link>
+          </li>
+          <li>
+            <Link href="/patient">Patient Dashboard</Link>
+          </li>
+          <li>
+            <Link href="/admin">Admin Dashboard</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 

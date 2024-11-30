@@ -26,7 +26,9 @@ const Home = () => {
           </a>
         </Link>
       </div>
-    </div>
+      <h2>Welcome to the Hospital Management System</h2>
+      <p>Select a dashboard to get started.</p>
+  </div>
   );
 };
 
