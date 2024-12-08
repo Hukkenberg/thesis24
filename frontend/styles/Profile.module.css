@@ -17,9 +17,9 @@
   font-weight: bold;
 }
 
-.row input,
-.row select,
-textarea {
+.container .row input,
+.container .row select,
+.container textarea {
   flex: 2;
   padding: 5px;
   border: 1px solid #ccc;
@@ -27,7 +27,7 @@ textarea {
   width: 100%;
 }
 
-textarea {
+.container textarea {
   min-height: 100px;
 }
 
