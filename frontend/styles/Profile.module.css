@@ -1,0 +1,67 @@
+.container {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.row label {
+  flex: 1;
+  font-weight: bold;
+}
+
+.row input,
+.row select,
+textarea {
+  flex: 2;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-around;
+}
+
+.buttonGroup button {
+  padding: 10px 20px;
+  background-color: #85d6f7;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.buttonGroup button:hover {
+  background-color: #3399ff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #dff7df;
+}
