@@ -1,16 +1,21 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "description": "Hospital Management System frontend with Next.js",
-  "main": "index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
-    "next": "^13.0.0",
+    "@reduxjs/toolkit": "^1.9.3",
+    "next": "^13.4.4",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0",
+    "eslint-config-next": "^13.4.4",
+    "typescript": "^5.1.3"
   }
 }

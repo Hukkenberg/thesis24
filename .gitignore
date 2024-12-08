@@ -1,41 +1,6 @@
-# Dependencies
+
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-package-lock.json
-yarn.lock
-
-# Production
-/build
-/.next
-/dist
-
-# Environment Variables
 .env
-.env.local
-.env.*.local
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Editor Directories and Files
-.idea/
-.vscode/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# OS Generated Files
 .DS_Store
-Thumbs.db
-
-# LFS-specific Directories
-frontend/node_modules/@next/swc-*
+pgdata/
+dist/
