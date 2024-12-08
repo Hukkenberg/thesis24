@@ -20,7 +20,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="container center">
       <h1>Login</h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <input

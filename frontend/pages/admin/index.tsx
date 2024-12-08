@@ -18,15 +18,19 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <h1>Admin Dashboard</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.username} - {user.role}
-          </li>
-        ))}
-      </ul>
+      {users.length === 0 ? (
+        <p>No users available.</p>
+      ) : (
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              {user.username} - {user.role}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
