@@ -1,10 +1,8 @@
 const express = require('express');
 const { getPatientProfile, updatePatientProfile } = require('../controllers/patientController');
-const authMiddleware = require('../middlewares/authMiddleware');
-const patientValidator = require('../validators/patientValidator');
 const router = express.Router();
 
-router.get('/profile', authMiddleware, getPatientProfile);
-router.put('/profile', authMiddleware, patientValidator.validatePatientUpdate, updatePatientProfile);
+router.get('/profile', getPatientProfile);
+router.put('/profile', updatePatientProfile);
 
 module.exports = router;
