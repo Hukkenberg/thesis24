@@ -7,14 +7,14 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
       "@redux/*": ["redux/*"],
       "@utils/*": ["utils/*"],
       "@styles/*": ["styles/*"]
-    },
-    "types": ["node"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
