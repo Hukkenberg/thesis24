@@ -17,7 +17,3 @@ export const postData = async (url: string, data: any) => {
   }
   return response.json();
 };
-
-export const saveToken = (token: string) => {
-  localStorage.setItem('token', token);
-};

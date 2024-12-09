@@ -1,14 +1,12 @@
 import '../styles/globals.css';
-import { store } from '../redux/store';
+import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
-import ErrorBoundary from '../components/ErrorBoundary';
+import { store } from '../redux/store';
 
-const App = ({ Component, pageProps }: any) => (
-  <Provider store={store}>
-    <ErrorBoundary>
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <Provider store={store}>
       <Component {...pageProps} />
-    </ErrorBoundary>
-  </Provider>
-);
-
-export default App;
+    </Provider>
+  );
+}

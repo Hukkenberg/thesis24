@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../redux/authSlice';
-import { postData, saveToken } from '../utils/api';
+import { postData } from '../utils/api';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -11,7 +11,6 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const { token } = await postData('/auth/login', { username, password });
-      saveToken(token);
       dispatch(login({ token, username }));
       alert('Login successful');
     } catch (error) {
@@ -20,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <div className="container center">
+    <div>
       <h1>Login</h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <input
@@ -35,7 +34,9 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="button" onClick={handleLogin}>Login</button>
+        <button type="button" onClick={handleLogin}>
+          Login
+        </button>
       </form>
     </div>
   );
