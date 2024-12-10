@@ -5,32 +5,38 @@ const AdminDashboard = () => {
   const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
-    const loadUsers = async () => {
+    const fetchUsers = async () => {
       try {
-        const data = await fetchData('/admins/users');
+        const data = await fetchData('/api/admin/users');
         setUsers(data);
       } catch (error) {
-        console.error(error);
+        console.error('Failed to fetch users:', error);
       }
     };
-
-    loadUsers();
+    fetchUsers();
   }, []);
 
   return (
-    <div className="container">
-      <h1>Admin Dashboard</h1>
-      {users.length === 0 ? (
-        <p>No users available.</p>
-      ) : (
-        <ul>
+    <div>
+      <h1>Quản lý hệ thống</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Tên</th>
+            <th>Email</th>
+            <th>Vai trò</th>
+          </tr>
+        </thead>
+        <tbody>
           {users.map((user) => (
-            <li key={user.id}>
-              {user.username} - {user.role}
-            </li>
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+            </tr>
           ))}
-        </ul>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };

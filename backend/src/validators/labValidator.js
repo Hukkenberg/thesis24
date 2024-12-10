@@ -1,7 +1,7 @@
-exports.validateLabReport = (req, res, next) => {
-  const { reportDetails } = req.body;
-  if (!reportDetails || typeof reportDetails !== 'string') {
-    return res.status(400).send("Invalid 'reportDetails' field");
+exports.validateLabResultUpdate = (req, res, next) => {
+  const { result } = req.body;
+  if (!result || typeof result !== 'string') {
+    return res.status(400).json({ error: 'Result must be a non-empty string' });
   }
   next();
 };

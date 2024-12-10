@@ -1,13 +1,14 @@
-const pool = require('../config/db');
+const sendNotification = async (userId, message) => {
+  // Placeholder for a real notification service (e.g., email, SMS, or push notifications)
+  console.log(`Notification sent to user ${userId}: ${message}`);
+};
 
-exports.sendNotification = async (userId, message) => {
+exports.notifyUser = async (userId, message) => {
   try {
-    await pool.query(
-      "INSERT INTO notifications (user_id, message, created_at) VALUES ($1, $2, NOW())",
-      [userId, message]
-    );
-    console.log(`Notification sent to user ${userId}: ${message}`);
+    await sendNotification(userId, message);
+    return { success: true, message: 'Notification sent successfully' };
   } catch (err) {
-    console.error(`Failed to send notification: ${err.message}`);
+    console.error('Failed to send notification:', err);
+    throw new Error('Notification service error');
   }
 };

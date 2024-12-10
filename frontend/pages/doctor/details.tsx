@@ -1,25 +1,37 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { fetchData, postData } from '../../utils/api';
 
-const DoctorDetails = ({ patientId }: { patientId: string }) => {
+const DoctorDetails = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const [patient, setPatient] = useState<any>(null);
   const [diagnosis, setDiagnosis] = useState('');
 
   useEffect(() => {
-    const fetchPatientDetails = async () => {
-      const data = await fetchData(`/api/doctor/patients/${patientId}`);
-      setPatient(data);
-      setDiagnosis(data.diagnosis || '');
+    const fetchPatient = async () => {
+      if (!id) return;
+      try {
+        const data = await fetchData(`/api/doctor/patients/${id}`);
+        setPatient(data);
+        setDiagnosis(data.diagnosis || '');
+      } catch (error) {
+        console.error('Failed to fetch patient details:', error);
+      }
     };
-    fetchPatientDetails();
-  }, [patientId]);
+    fetchPatient();
+  }, [id]);
 
-  const handleUpdateDiagnosis = async () => {
-    await postData(`/api/doctor/patients/${patientId}/diagnosis`, { diagnosis });
-    alert('Cập nhật chẩn đoán thành công!');
+  const updateDiagnosis = async () => {
+    try {
+      await postData(`/api/doctor/patients/${id}/diagnosis`, { diagnosis });
+      alert('Chẩn đoán đã được cập nhật!');
+    } catch (error) {
+      console.error('Failed to update diagnosis:', error);
+    }
   };
 
-  if (!patient) return <p>Đang tải dữ liệu...</p>;
+  if (!patient) return <p>Đang tải...</p>;
 
   return (
     <div>
@@ -31,8 +43,8 @@ const DoctorDetails = ({ patientId }: { patientId: string }) => {
         value={diagnosis}
         onChange={(e) => setDiagnosis(e.target.value)}
         placeholder="Nhập chẩn đoán"
-      ></textarea>
-      <button onClick={handleUpdateDiagnosis}>Lưu chẩn đoán</button>
+      />
+      <button onClick={updateDiagnosis}>Lưu chẩn đoán</button>
     </div>
   );
 };

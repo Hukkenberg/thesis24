@@ -1,7 +1,10 @@
 const express = require('express');
-const { getAccountDetails } = require('../controllers/accountController');
+const { getAccountDetails, updateAccount } = require('../controllers/accountController');
+const { authenticate } = require('../middlewares/authMiddleware');
+
 const router = express.Router();
 
-router.get('/', getAccountDetails);
+router.get('/', authenticate, getAccountDetails);
+router.put('/', authenticate, updateAccount);
 
 module.exports = router;

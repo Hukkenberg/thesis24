@@ -1,8 +1,11 @@
 const express = require('express');
-const { viewLabReports, uploadLabReport } = require('../controllers/labController');
+const { getLabResults, updateLabResult } = require('../controllers/labController');
+const { authenticate } = require('../middlewares/authMiddleware');
+const { authorize } = require('../middlewares/roleMiddleware');
+
 const router = express.Router();
 
-router.get('/reports', viewLabReports);
-router.post('/upload', uploadLabReport);
+router.get('/results', authenticate, authorize(['lab']), getLabResults);
+router.put('/results/:id', authenticate, authorize(['lab']), updateLabResult);
 
 module.exports = router;

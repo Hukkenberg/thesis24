@@ -1,20 +1,24 @@
-const pool = require('../config/db');
+const LabResult = require('../models/LabResult');
 
-exports.viewLabReports = async (req, res) => {
+exports.getLabResults = async (req, res) => {
   try {
-    const reports = await pool.query("SELECT * FROM lab_reports WHERE user_id = $1", [req.user.id]);
-    res.json(reports.rows);
+    const labResults = await LabResult.find({}).populate('patientId', 'name age').populate('labTechnicianId', 'name');
+    res.status(200).json(labResults);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: 'Failed to fetch lab results' });
   }
 };
 
-exports.uploadLabReport = async (req, res) => {
-  const { reportDetails } = req.body;
+exports.updateLabResult = async (req, res) => {
   try {
-    await pool.query("INSERT INTO lab_reports (user_id, details) VALUES ($1, $2)", [req.user.id, reportDetails]);
-    res.status(201).send("Lab report uploaded");
+    const { id } = req.params;
+    const { result } = req.body;
+    const labResult = await LabResult.findByIdAndUpdate(id, { result }, { new: true }).populate('patientId', 'name');
+    if (!labResult) {
+      return res.status(404).json({ error: 'Lab result not found' });
+    }
+    res.status(200).json(labResult);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: 'Failed to update lab result' });
   }
 };
