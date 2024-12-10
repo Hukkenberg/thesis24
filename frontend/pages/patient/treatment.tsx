@@ -1,8 +1,7 @@
-// frontend/pages/patient/treatment.tsx
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import { fetchData } from '../../utils/api';
-import styles from '../../styles/Treatment.module.css';
+import styles from '../../styles/Profile.module.css';
 
 const PatientTreatment = () => {
   const [treatment, setTreatment] = useState([]);
