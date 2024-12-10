@@ -1,9 +1,7 @@
-// frontend/pages/doctor/index.tsx
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../components/Navbar';
 import { fetchPatients } from '../../redux/patientSlice';
-import axios from 'axios';
 import PatientCard from '../../components/PatientCard';
 import styles from '../../styles/Profile.module.css';
 
