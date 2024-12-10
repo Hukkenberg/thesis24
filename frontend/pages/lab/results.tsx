@@ -12,9 +12,10 @@ const LabResults = () => {
     fetchResults();
   }, []);
 
-  const handleUpdate = (id, newResult) => {
+  const handleUpdate = (id: string, newResult: string) => {
     postData(`/api/lab/results/${id}`, { result: newResult });
   };
+  
 
   return (
     <div className="lab-results">
