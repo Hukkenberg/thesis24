@@ -1,8 +1,7 @@
-// frontend/pages/patient/progress.tsx
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import { fetchData } from '../../utils/api';
-import styles from '../../styles/Progress.module.css';
+import styles from '../../styles/Profile.module.css';
 
 const PatientProgress = () => {
   const [progress, setProgress] = useState([]);
