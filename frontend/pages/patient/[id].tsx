@@ -1,16 +1,16 @@
-// frontend/pages/patient/[id].tsx
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
-import { updatePatient } from '../../redux/patientSlice';
 import Navbar from '../../components/Navbar';
-import styles from '../../styles/Profile.module.css';
+import { updatePatient } from '../../redux/patientSlice';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import styles from '../../styles/Profile.module.css';
 
 const PatientDetails = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [patient, setPatient] = useState({ name: '', age: '', gender: '', diagnosis: '' });
+  const [patient, setPatient] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,57 +20,45 @@ const PatientDetails = () => {
         setPatient(response.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
     if (id) fetchPatient();
   }, [id]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(updatePatient({ id, data: patient }));
+    if (id && patient) {
+      dispatch(updatePatient({ id: String(id), data: patient }));
+    }
   };
+
+  if (loading) return <p>Loading patient details...</p>;
 
   return (
     <div>
       <Navbar />
       <div className={styles.container}>
         <form onSubmit={handleSubmit}>
-          <h2>Chi tiết bệnh nhân</h2>
+          <h2>Patient Details</h2>
           <div className={styles.row}>
-            <label>Họ và tên:</label>
+            <label>Name:</label>
             <input
               type="text"
-              value={patient.name}
+              value={patient.name || ''}
               onChange={(e) => setPatient({ ...patient, name: e.target.value })}
             />
           </div>
           <div className={styles.row}>
-            <label>Tuổi:</label>
+            <label>Age:</label>
             <input
               type="number"
-              value={patient.age}
+              value={patient.age || ''}
               onChange={(e) => setPatient({ ...patient, age: e.target.value })}
             />
           </div>
-          <div className={styles.row}>
-            <label>Giới tính:</label>
-            <select
-              value={patient.gender}
-              onChange={(e) => setPatient({ ...patient, gender: e.target.value })}
-            >
-              <option value="male">Nam</option>
-              <option value="female">Nữ</option>
-              <option value="other">Khác</option>
-            </select>
-          </div>
-          <div className={styles.row}>
-            <label>Chẩn đoán:</label>
-            <textarea
-              value={patient.diagnosis}
-              onChange={(e) => setPatient({ ...patient, diagnosis: e.target.value })}
-            />
-          </div>
-          <button type="submit">Cập nhật</button>
+          <button type="submit">Update Patient</button>
         </form>
       </div>
     </div>
