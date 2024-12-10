@@ -1,37 +1,37 @@
-// frontend/pages/lab/results.tsx
-import { useState, useEffect } from 'react';
+// frontend/pages/doctor/index.tsx
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Navbar from '../../components/Navbar';
-import { fetchData } from '../../utils/api';
-import styles from '../../styles/LabResults.module.css';
-import Chart from 'chart.js/auto';
+import { fetchPatients } from '../../redux/patientSlice';
+import PatientCard from '../../components/PatientCard';
+import styles from '../../styles/Profile.module.css';
 
-const LabResults = () => {
-  const [results, setResults] = useState([]);
+const DoctorDashboard = () => {
+  const dispatch = useDispatch();
+  const { data: patients, status } = useSelector((state: any) => state.patients);
 
   useEffect(() => {
-    const fetchResults = async () => {
-      const data = await fetchData('/api/lab/results');
-      setResults(data);
-    };
-    fetchResults();
-  }, []);
+    if (status === 'idle') {
+      dispatch(fetchPatients());
+    }
+  }, [dispatch, status]);
+
+  if (status === 'loading') return <p>Loading patients...</p>;
+  if (status === 'failed') return <p>Failed to load patients.</p>;
 
   return (
     <div>
       <Navbar />
-      <div className={styles.container}>
-        <h2>Lab Results</h2>
-        <canvas id="labResultsChart"></canvas>
-        <ul>
-          {results.map((result: any) => (
-            <li key={result.id}>
-              {result.name}: {result.value}
-            </li>
+      <div className={styles.dashboard}>
+        <h1>Doctor Dashboard</h1>
+        <div className={styles.grid}>
+          {patients.map((patient: any) => (
+            <PatientCard key={patient.id} patient={patient} />
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
 };
 
-export default LabResults;
+export default DoctorDashboard;
