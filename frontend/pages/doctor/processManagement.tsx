@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import { fetchData } from '../../utils/api';
-import styles from '../../styles/ProcessManagement.module.css';
+import styles from '../../styles/Profile.module.css';
 
 const ProcessManagement = () => {
   const [processData, setProcessData] = useState([]);
@@ -19,13 +19,13 @@ const ProcessManagement = () => {
     <div>
       <Navbar />
       <div className={styles.container}>
-        <h2>Quản Lý Tiến Trình</h2>
+        <h2>Process Management</h2>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Trạng Thái</th>
-              <th>Số Lượng</th>
-              <th>Chi Tiết</th>
+              <th>Status</th>
+              <th>Count</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
@@ -33,7 +33,7 @@ const ProcessManagement = () => {
               <tr key={row.status}>
                 <td>{row.status}</td>
                 <td>{row.count}</td>
-                <td><button>Chi Tiết</button></td>
+                <td><button>Details</button></td>
               </tr>
             ))}
           </tbody>
