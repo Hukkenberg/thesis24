@@ -1,42 +1,40 @@
-import Navbar from '../../components/Navbar';
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../utils/api';
-import styles from '../../styles/Profile.module.css';
-import { useRouter } from 'next/router';
+import { fetchData, postData } from '../../utils/api';
 
-const PatientDetails = () => {
-  const router = useRouter();
-  const { id } = router.query;
+const DoctorDetails = ({ patientId }: { patientId: string }) => {
   const [patient, setPatient] = useState<any>(null);
+  const [diagnosis, setDiagnosis] = useState('');
 
   useEffect(() => {
-    const loadPatientDetails = async () => {
-      if (!id) return;
-      try {
-        const data = await fetchData(`/doctors/patients/${id}`);
-        setPatient(data);
-      } catch (error) {
-        console.error('Failed to load patient details', error);
-      }
+    const fetchPatientDetails = async () => {
+      const data = await fetchData(`/api/doctor/patients/${patientId}`);
+      setPatient(data);
+      setDiagnosis(data.diagnosis || '');
     };
+    fetchPatientDetails();
+  }, [patientId]);
 
-    loadPatientDetails();
-  }, [id]);
+  const handleUpdateDiagnosis = async () => {
+    await postData(`/api/doctor/patients/${patientId}/diagnosis`, { diagnosis });
+    alert('Cập nhật chẩn đoán thành công!');
+  };
 
-  if (!patient) return <p>Loading...</p>;
+  if (!patient) return <p>Đang tải dữ liệu...</p>;
 
   return (
     <div>
-      <Navbar />
-      <div className={styles.container}>
-        <h2>Patient Details</h2>
-        <p><strong>Name:</strong> {patient.name}</p>
-        <p><strong>Age:</strong> {patient.age}</p>
-        <p><strong>Gender:</strong> {patient.gender}</p>
-        <p><strong>Medical History:</strong> {patient.history}</p>
-      </div>
+      <h1>Chi tiết bệnh nhân</h1>
+      <p><strong>Tên:</strong> {patient.name}</p>
+      <p><strong>Tuổi:</strong> {patient.age}</p>
+      <p><strong>Giới tính:</strong> {patient.gender}</p>
+      <textarea
+        value={diagnosis}
+        onChange={(e) => setDiagnosis(e.target.value)}
+        placeholder="Nhập chẩn đoán"
+      ></textarea>
+      <button onClick={handleUpdateDiagnosis}>Lưu chẩn đoán</button>
     </div>
   );
 };
 
-export default PatientDetails;
+export default DoctorDetails;

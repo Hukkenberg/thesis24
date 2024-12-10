@@ -1,20 +1,22 @@
-const pool = require('../config/db');
+const Patient = require('../models/Patient');
 
-exports.getDoctorProfile = async (req, res) => {
+exports.getPatients = async (req, res) => {
   try {
-    const doctor = await pool.query("SELECT * FROM doctors WHERE user_id = $1", [req.user.id]);
-    if (!doctor.rows.length) return res.status(404).send("Doctor not found");
-    res.json(doctor.rows[0]);
+    const doctorId = req.user.id;
+    const patients = await Patient.find({ doctorId });
+    res.status(200).json(patients);
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: 'Lỗi khi tải danh sách bệnh nhân.' });
   }
 };
 
-exports.viewPatients = async (req, res) => {
+exports.updateDiagnosis = async (req, res) => {
   try {
-    const patients = await pool.query("SELECT * FROM patients WHERE doctor_id = $1", [req.user.id]);
-    res.json(patients.rows);
+    const { id } = req.params;
+    const { diagnosis } = req.body;
+    await Patient.findByIdAndUpdate(id, { diagnosis });
+    res.status(200).json({ message: 'Diagnosis updated successfully!' });
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({ error: 'Failed to update diagnosis.' });
   }
 };

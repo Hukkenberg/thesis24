@@ -1,67 +1,36 @@
-.container {
-  background-color: #f7f7f7;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 20px auto;
-  max-width: 800px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.row label {
-  flex: 1;
-  font-weight: bold;
-}
-
-.container .row input,
-.container .row select,
-.container textarea {
-  flex: 2;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-}
-
-.container textarea {
-  min-height: 100px;
-}
-
-.buttonGroup {
-  display: flex;
-  justify-content: space-around;
-}
-
-.buttonGroup button {
-  padding: 10px 20px;
-  background-color: #85d6f7;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.buttonGroup button:hover {
-  background-color: #3399ff;
-}
-
 .table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
 }
 
 .table th,
 .table td {
-  border: 1px solid #ccc;
-  padding: 10px;
+  padding: 8px;
+  border: 1px solid #ddd;
   text-align: left;
 }
 
 .table th {
-  background-color: #dff7df;
+  background-color: #f4f4f4;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
 }

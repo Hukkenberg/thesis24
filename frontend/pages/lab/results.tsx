@@ -1,41 +1,50 @@
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../utils/api';
-import styles from '../../styles/Dashboard.module.css';
+import { fetchData, postData } from '../../utils/api';
 
 const LabResults = () => {
-  const [results, setResults] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const [results, setResults] = useState([]);
 
   useEffect(() => {
-    const loadResults = async () => {
-      try {
-        const data = await fetchData('/labs/reports');
-        setResults(data);
-      } catch (err) {
-        setError('Failed to load lab results. Please try again later.');
-      }
+    const fetchResults = async () => {
+      const data = await fetchData('/api/lab/results');
+      setResults(data);
     };
-
-    loadResults();
+    fetchResults();
   }, []);
 
-  if (error) return <p className={styles.error}>{error}</p>;
+  const handleUpdate = (id, newResult) => {
+    postData(`/api/lab/results/${id}`, { result: newResult });
+  };
 
   return (
-    <div className={styles.dashboard}>
-      <h1>Lab Results</h1>
-      {results.length === 0 ? (
-        <p>No lab results available.</p>
-      ) : (
-        <ul>
+    <div className="lab-results">
+      <h1>Kết quả xét nghiệm</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Tên bệnh nhân</th>
+            <th>Kết quả</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
           {results.map((result) => (
-            <li key={result.id}>
-              <p>{result.details}</p>
-              <p><strong>Report Date:</strong> {new Date(result.created_at).toLocaleDateString()}</p>
-            </li>
+            <tr key={result.id}>
+              <td>{result.patientName}</td>
+              <td>
+                <input
+                  type="text"
+                  defaultValue={result.result}
+                  onBlur={(e) => handleUpdate(result.id, e.target.value)}
+                />
+              </td>
+              <td>
+                <button>Cập nhật</button>
+              </td>
+            </tr>
           ))}
-        </ul>
-      )}
+        </tbody>
+      </table>
     </div>
   );
 };
