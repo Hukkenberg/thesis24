@@ -1,7 +1,7 @@
 // frontend/pages/login.tsx
 import { useState } from 'react';
 import { postData } from '../utils/api';
-import styles from '../styles/Auth.module.css';
+import styles from '../styles/Profile.module.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
