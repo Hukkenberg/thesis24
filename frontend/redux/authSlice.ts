@@ -1,43 +1,18 @@
-// frontend/redux/patientSlice.ts
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+// frontend/redux/authSlice.ts
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchPatients = createAsyncThunk('patients/fetchPatients', async () => {
-  const response = await axios.get('/api/patients');
-  return response.data;
-});
-
-export const updatePatient = createAsyncThunk('patients/updatePatient', async ({ id, data }: { id: string, data: any }) => {
-  const response = await axios.put(`/api/patients/${id}`, data);
-  return response.data;
-});
-
-const patientSlice = createSlice({
-  name: 'patients',
-  initialState: {
-    data: [],
-    status: 'idle',
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPatients.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchPatients.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchPatients.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      })
-      .addCase(updatePatient.fulfilled, (state, action) => {
-        const index = state.data.findIndex((p) => p.id === action.payload.id);
-        if (index !== -1) state.data[index] = action.payload;
-      });
+const authSlice = createSlice({
+  name: 'auth',
+  initialState: { user: null },
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    clearUser: (state) => {
+      state.user = null;
+    },
   },
 });
 
-export default patientSlice.reducer;
+export const { setUser, clearUser } = authSlice.actions;
+export default authSlice.reducer;
