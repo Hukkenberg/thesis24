@@ -1,11 +1,11 @@
+// frontend/redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './authSlice';
+import patientReducer from './patientSlice';
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer
+    patients: patientReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export type RootState = ReturnType<typeof store.getState>;

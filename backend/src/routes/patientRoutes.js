@@ -9,5 +9,7 @@ const router = express.Router();
 router.get('/', authenticate, authorize(['doctor', 'admin']), getAllPatients);
 router.post('/', authenticate, authorize(['doctor', 'admin']), validatePatientCreation, createPatient);
 router.delete('/:id', authenticate, authorize(['doctor', 'admin']), deletePatient);
+router.put('/:id', authenticate, authorize(['doctor', 'admin']), validatePatientCreation, updatePatient);
+
 
 module.exports = router;

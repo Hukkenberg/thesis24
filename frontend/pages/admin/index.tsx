@@ -1,42 +1,53 @@
+// frontend/pages/admin/index.tsx
 import { useEffect, useState } from 'react';
-import { fetchData } from '../../utils/api';
+import Navbar from '../../components/Navbar';
+import { fetchData, postData } from '../../utils/api';
+import styles from '../../styles/Dashboard.module.css';
 
 const AdminDashboard = () => {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const data = await fetchData('/api/admin/users');
         setUsers(data);
-      } catch (error) {
-        console.error('Failed to fetch users:', error);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchUsers();
   }, []);
 
+  const updateRole = async (id: string, role: string) => {
+    try {
+      await postData('/api/admin/update-role', { userId: id, role });
+      alert('Role updated successfully!');
+    } catch (err) {
+      alert('Failed to update role.');
+    }
+  };
+
+  if (loading) return <p>Loading users...</p>;
+
   return (
     <div>
-      <h1>Quản lý hệ thống</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Tên</th>
-            <th>Email</th>
-            <th>Vai trò</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
-            </tr>
+      <Navbar />
+      <div className={styles.dashboard}>
+        <h1>Admin Dashboard</h1>
+        <ul>
+          {users.map((user: any) => (
+            <li key={user.id}>
+              <p>{user.name} ({user.role})</p>
+              <button onClick={() => updateRole(user.id, 'doctor')}>Make Doctor</button>
+              <button onClick={() => updateRole(user.id, 'admin')}>Make Admin</button>
+            </li>
           ))}
-        </tbody>
-      </table>
+        </ul>
+      </div>
     </div>
   );
 };

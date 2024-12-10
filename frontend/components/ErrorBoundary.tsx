@@ -1,4 +1,6 @@
+// frontend/components/ErrorBoundary.tsx
 import { Component, ReactNode } from 'react';
+import styles from '../styles/ErrorBoundary.module.css';
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
   constructor(props: any) {
@@ -15,7 +17,8 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
   }
 
   render() {
-    if (this.state.hasError) return <h1>Something went wrong.</h1>;
+    if (this.state.hasError)
+      return <div className={styles.error}>Oops! Something went wrong. Please try again later.</div>;
     return this.props.children;
   }
 }

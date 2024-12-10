@@ -31,3 +31,17 @@ exports.deletePatient = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete patient' });
   }
 };
+
+exports.updatePatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, age, gender, diagnosis } = req.body;
+    const patient = await Patient.update(
+      { name, age, gender, diagnosis },
+      { where: { id }, returning: true }
+    );
+    res.status(200).json({ patient, message: 'Patient updated successfully.' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update patient.' });
+  }
+};

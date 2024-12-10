@@ -1,6 +1,9 @@
+// frontend/pages/doctor/details.tsx
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import Navbar from '../../components/Navbar';
 import { fetchData, postData } from '../../utils/api';
+import styles from '../../styles/Profile.module.css';
 
 const DoctorDetails = () => {
   const router = useRouter();
@@ -10,41 +13,41 @@ const DoctorDetails = () => {
 
   useEffect(() => {
     const fetchPatient = async () => {
-      if (!id) return;
       try {
-        const data = await fetchData(`/api/doctor/patients/${id}`);
-        setPatient(data);
-        setDiagnosis(data.diagnosis || '');
-      } catch (error) {
-        console.error('Failed to fetch patient details:', error);
+        const patientData = await fetchData(`/api/doctor/patients/${id}`);
+        setPatient(patientData);
+      } catch (err) {
+        console.error(err);
       }
     };
-    fetchPatient();
+    if (id) fetchPatient();
   }, [id]);
 
-  const updateDiagnosis = async () => {
+  const handleUpdateDiagnosis = async () => {
     try {
       await postData(`/api/doctor/patients/${id}/diagnosis`, { diagnosis });
-      alert('Chẩn đoán đã được cập nhật!');
-    } catch (error) {
-      console.error('Failed to update diagnosis:', error);
+      alert('Diagnosis updated successfully!');
+    } catch (err) {
+      alert('Failed to update diagnosis.');
     }
   };
 
-  if (!patient) return <p>Đang tải...</p>;
+  if (!patient) return <p>Loading patient details...</p>;
 
   return (
     <div>
-      <h1>Chi tiết bệnh nhân</h1>
-      <p><strong>Tên:</strong> {patient.name}</p>
-      <p><strong>Tuổi:</strong> {patient.age}</p>
-      <p><strong>Giới tính:</strong> {patient.gender}</p>
-      <textarea
-        value={diagnosis}
-        onChange={(e) => setDiagnosis(e.target.value)}
-        placeholder="Nhập chẩn đoán"
-      />
-      <button onClick={updateDiagnosis}>Lưu chẩn đoán</button>
+      <Navbar />
+      <div className={styles.container}>
+        <h2>Patient Details</h2>
+        <p><strong>Name:</strong> {patient.name}</p>
+        <p><strong>Age:</strong> {patient.age}</p>
+        <textarea
+          value={diagnosis}
+          onChange={(e) => setDiagnosis(e.target.value)}
+          placeholder="Update diagnosis"
+        />
+        <button onClick={handleUpdateDiagnosis}>Update Diagnosis</button>
+      </div>
     </div>
   );
 };
