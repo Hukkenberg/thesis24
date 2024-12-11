@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const LabResult = sequelize.define('LabResult', {
+const Prescription = sequelize.define('Prescription', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -12,21 +12,22 @@ const LabResult = sequelize.define('LabResult', {
         allowNull: false,
         references: { model: 'Patients', key: 'id' },
     },
-    testType: {
-        type: DataTypes.STRING,
+    doctorId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: { model: 'Doctors', key: 'id' },
+    },
+    medications: {
+        type: DataTypes.TEXT,
         allowNull: false,
     },
-    result: {
-        type: DataTypes.STRING,
+    notes: {
+        type: DataTypes.TEXT,
     },
     status: {
-        type: DataTypes.ENUM('pending', 'completed', 'requested'),
-        defaultValue: 'pending',
-    },
-    reason: {
-        type: DataTypes.TEXT,
-        allowNull: true,
+        type: DataTypes.ENUM('active', 'completed', 'canceled'),
+        defaultValue: 'active',
     },
 });
 
-module.exports = LabResult;
+module.exports = Prescription;

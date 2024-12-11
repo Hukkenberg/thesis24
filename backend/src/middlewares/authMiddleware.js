@@ -1,20 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
-export function authenticate(req: NextApiRequest, res: NextApiResponse, next: Function) {
-  const authHeader = req.headers.authorization;
+const authMiddleware = (req, res, next) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Access denied, no token provided' });
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+    try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET || 'your_secret_key');
+        req.user = verified; // Add user info to request
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Invalid token' });
+    }
+};
 
-  const token = authHeader.split(' ')[1];
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
-    (req as any).user = decoded;
-    next();
-  } catch (err) {
-    return res.status(403).json({ error: 'Forbidden' });
-  }
-}
+module.exports = { authMiddleware };

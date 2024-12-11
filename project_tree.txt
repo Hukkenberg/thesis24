@@ -1,0 +1,330 @@
+├── .git/
+│   ├── COMMIT_EDITMSG
+│   ├── config
+│   ├── description
+│   ├── FETCH_HEAD
+│   ├── HEAD
+│   ├── hooks/
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-checkout
+│   │   ├── post-commit
+│   │   ├── post-merge
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── pre-push
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── update.sample
+│   ├── index
+│   ├── info/
+│   │   ├── exclude
+│   ├── lfs/
+│   │   ├── cache/
+│   │   │   ├── locks/
+│   │   │   │   ├── refs/
+│   │   │   │   │   ├── heads/
+│   │   │   │   │   │   ├── main/
+│   │   │   │   │   │   │   ├── verifiable
+│   │   ├── tmp/
+│   ├── logs/
+│   │   ├── HEAD
+│   │   ├── refs/
+│   │   │   ├── heads/
+│   │   │   │   ├── main
+│   │   │   ├── remotes/
+│   │   │   │   ├── origin/
+│   │   │   │   │   ├── HEAD
+│   │   │   │   │   ├── main
+│   ├── objects/
+│   │   ├── 00/
+│   │   │   ├── 8e2bd0b2f118768df6a4b070c28fdb7a052253
+│   │   ├── 03/
+│   │   │   ├── f7ac8b81da277415fb3bb15eb3c14f29ba2792
+│   │   ├── 05/
+│   │   │   ├── c2a8fc0bbe9c190af4b254d32d03c9afe165b8
+│   │   ├── 18/
+│   │   │   ├── e9caa1427a471d147448252a4745218620055c
+│   │   ├── 19/
+│   │   │   ├── 069ec5cdd92cac5879ad271fe86b2a13daf459
+│   │   ├── 37/
+│   │   │   ├── 441bc9a7f099b4da4dcab05f4cf67746e15148
+│   │   ├── 4f/
+│   │   │   ├── 86f3f599d69047cb5374047505ecc23b59deba
+│   │   ├── 53/
+│   │   │   ├── ba9d33f2e766f1339e7270bbd9c86c56d8327b
+│   │   ├── 6a/
+│   │   │   ├── dea7baed978a5aede73afc93493a717befa6d7
+│   │   ├── 78/
+│   │   │   ├── a221ad1f452f83b119f5263e2dec28e5670d1e
+│   │   ├── 7d/
+│   │   │   ├── b2ce85e748e0231f54e7573886610c231f2a83
+│   │   ├── 82/
+│   │   │   ├── 06404a7ef78fff9ad4c245b318a0968198b82c
+│   │   │   ├── 2f558bd4c1f5071924270850f50ce35498a2d4
+│   │   │   ├── 6dafff6e36d666df1a29aed97592eaad7b0a52
+│   │   ├── 87/
+│   │   │   ├── 8f2e801f2f9b58af9bb2d7df862cd340e556e5
+│   │   │   ├── b963e4e6ba02809985505e91d9a528b5039dc3
+│   │   ├── 8a/
+│   │   │   ├── d2d2252de6f379ae88ea8187d0335895040b48
+│   │   ├── 8c/
+│   │   │   ├── 2d551aa9f323149c5b150f726131ce92643ff6
+│   │   ├── 91/
+│   │   │   ├── 52503e44ae02ae08ec0ee240602e994c3d1175
+│   │   ├── 95/
+│   │   │   ├── 942004b31420a05a738bab7c942bfc38b11ac9
+│   │   │   ├── 9accaacb33d2d264149b1d394968c40bd777c3
+│   │   ├── a4/
+│   │   │   ├── af93aeff573be1e03436ae85970ab93f9cdc82
+│   │   ├── a9/
+│   │   │   ├── 910cc59facf67bf7761be2a8a56154090a992d
+│   │   ├── ac/
+│   │   │   ├── 4458ebfa7b8220e7c3243e93c258ee5242be5f
+│   │   ├── b1/
+│   │   │   ├── 6983340084334af4685a90b702c21a1c0f6c57
+│   │   ├── b6/
+│   │   │   ├── 166381f74348596a15166ac6e1e62d8cc3310a
+│   │   ├── c9/
+│   │   │   ├── 25e7b628fddae9e5df54653b16d474c94a773b
+│   │   ├── cc/
+│   │   │   ├── 191d9e3417a8454f87b69b0b6b1d03206061fb
+│   │   ├── cd/
+│   │   │   ├── cba25d8d49d590b00648584c03ec62fe950522
+│   │   ├── ce/
+│   │   │   ├── 231f135096e467b1c88832b13b8d8259ab3231
+│   │   ├── d0/
+│   │   │   ├── 9a059ecab18b82e53b3dacf4ae53abff62aea0
+│   │   ├── d1/
+│   │   │   ├── 9952fa357c0a8ae95ec04a31cd0552e8927b4f
+│   │   ├── d6/
+│   │   │   ├── 4a23c0252512c4e88ac333f4f3232118ab7989
+│   │   │   ├── f58cbc2d4b2bdb4daa8f92e324142ae094b0eb
+│   │   ├── d8/
+│   │   │   ├── f1df22e237da99869ef51e9ee668d35ee485d7
+│   │   ├── de/
+│   │   │   ├── a64590f5844609c8c28cada44dcbd893a473cf
+│   │   ├── e6/
+│   │   │   ├── 03a04faf17b03a00cc3f767d4a7386270a3248
+│   │   ├── ed/
+│   │   │   ├── 804ee7c4a553dd05cf9d4dd5a75396f1de33dc
+│   │   ├── ee/
+│   │   │   ├── 494da3a1433a04c201cede3309883764031f5f
+│   │   ├── f6/
+│   │   │   ├── 19b0978057b2940c7372f711a18f63a99cd4aa
+│   │   ├── f8/
+│   │   │   ├── 4bb284f5908715802d847b20472ea13a42888e
+│   │   ├── f9/
+│   │   │   ├── 38de67dfa4456c7de2136cc6d9d429480e83fe
+│   │   ├── fa/
+│   │   │   ├── ba9f41af1878a728d5f960bdf005891627c146
+│   │   ├── fc/
+│   │   │   ├── 6bc4183086ef0e3c658e1aac2d844d6115a5c2
+│   │   ├── info/
+│   │   ├── pack/
+│   │   │   ├── pack-0e3d1f9af84f6fcf92b5f8f7511d274824e9e865.idx
+│   │   │   ├── pack-0e3d1f9af84f6fcf92b5f8f7511d274824e9e865.pack
+│   │   │   ├── pack-4747fe4b2a8bdb4eb342788ccb1b643ba01ef558.idx
+│   │   │   ├── pack-4747fe4b2a8bdb4eb342788ccb1b643ba01ef558.pack
+│   │   │   ├── pack-4747fe4b2a8bdb4eb342788ccb1b643ba01ef558.rev
+│   ├── ORIG_HEAD
+│   ├── packed-refs
+│   ├── refs/
+│   │   ├── heads/
+│   │   │   ├── main
+│   │   ├── remotes/
+│   │   │   ├── origin/
+│   │   │   │   ├── HEAD
+│   │   │   │   ├── main
+│   │   ├── tags/
+├── .gitattributes
+├── .gitignore
+├── backend/
+│   ├── migrations/
+│   │   ├── 001-create-user.js
+│   │   ├── 002-create-patient.js
+│   │   ├── 003-create-doctor.js
+│   │   ├── 004-create-labresult.js
+│   │   ├── 005-create-appointment.js
+│   │   ├── init_db.js
+│   ├── src/
+│   │   ├── api/
+│   │   │   ├── admin/
+│   │   │   │   ├── users.ts
+│   │   │   ├── appointment.ts
+│   │   │   ├── auth/
+│   │   │   │   ├── login.ts
+│   │   │   │   ├── logout.ts
+│   │   │   │   ├── refresh.ts
+│   │   │   ├── auth.js
+│   │   │   ├── doctor/
+│   │   │   │   ├── patients.ts
+│   │   │   ├── lab/
+│   │   │   │   ├── results.ts
+│   │   │   │   ├── tests.ts
+│   │   │   ├── labResults.ts
+│   │   │   ├── patient/
+│   │   │   │   ├── index.ts
+│   │   │   │   ├── progress.ts
+│   │   │   ├── prescriptions.ts
+│   │   │   ├── users.js
+│   │   ├── app.js
+│   │   ├── config/
+│   │   │   ├── db.js
+│   │   │   ├── environment.js
+│   │   │   ├── logger.js
+│   │   ├── controllers/
+│   │   │   ├── accountController.js
+│   │   │   ├── adminController.js
+│   │   │   ├── appointmentController.js
+│   │   │   ├── authController.js
+│   │   │   ├── doctorController.js
+│   │   │   ├── labController.js
+│   │   │   ├── patientController.js
+│   │   │   ├── reportController.js
+│   │   ├── middlewares/
+│   │   │   ├── authMiddleware.js
+│   │   │   ├── errorHandler.js
+│   │   │   ├── notificationMiddleware.js
+│   │   │   ├── rbacMiddleware.js
+│   │   │   ├── roleMiddleware.js
+│   │   ├── models/
+│   │   │   ├── Appointment.js
+│   │   │   ├── Doctor.js
+│   │   │   ├── index.js
+│   │   │   ├── LabResult.js
+│   │   │   ├── Patient.js
+│   │   │   ├── prescriptions.js
+│   │   │   ├── User.js
+│   │   ├── package.json
+│   │   ├── routes/
+│   │   │   ├── accountRoute.js
+│   │   │   ├── accountRoutes.js
+│   │   │   ├── adminRoutes.js
+│   │   │   ├── appointmentRoutes.js
+│   │   │   ├── authRoutes.js
+│   │   │   ├── doctorRoutes.js
+│   │   │   ├── labRoutes.js
+│   │   │   ├── patientRoutes.js
+│   │   │   ├── secureRoutes.js
+│   │   ├── server.js
+│   │   ├── services/
+│   │   │   ├── notificationService.js
+│   │   │   ├── reportService.js
+│   │   ├── tests/
+│   │   │   ├── controllers/
+│   │   │   │   ├── authController.test.js
+│   │   │   │   ├── dbUtils.test.js
+│   │   │   │   ├── patientRoutes.test.js
+│   │   ├── tsconfig.json
+│   │   ├── utils/
+│   │   │   ├── auth.js
+│   │   ├── validators/
+│   │   │   ├── authValidator.js
+│   │   │   ├── labValidator.js
+│   │   │   ├── patientValidator.js
+│   ├── tests/
+│   │   ├── controllers/
+│   │   │   ├── authController.test.js
+│   │   │   ├── doctorController.test.js
+│   │   │   ├── patientController.test.js
+│   │   ├── routes/
+│   │   │   ├── authRoutes.test.js
+│   │   │   ├── patientRoutes.test.js
+├── database/
+│   ├── init_db.js
+│   ├── migrations/
+│   │   ├── 001_add_email_to_users.sql
+│   ├── schema.sql
+│   ├── seeds/
+│   │   ├── 001_seed_users.sql
+├── docker-compose.yml
+├── frontend/
+│   ├── .env.local
+│   ├── api/
+│   │   ├── admin/
+│   │   │   ├── users.ts
+│   │   ├── auth/
+│   │   │   ├── refresh.ts
+│   │   ├── doctor/
+│   │   │   ├── appointments.ts
+│   │   │   ├── patients.ts
+│   │   ├── lab/
+│   │   │   ├── results.ts
+│   │   │   ├── tests.ts
+│   │   ├── patient/
+│   │   │   ├── appointments.ts
+│   │   │   ├── results.ts
+│   ├── components/
+│   │   ├── AdminCard.tsx
+│   │   ├── DoctorCard.tsx
+│   │   ├── LabCard.tsx
+│   │   ├── NavigationBar.tsx
+│   │   ├── PatientCard.tsx
+│   ├── context/
+│   │   ├── AuthContext.tsx
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── pages/
+│   │   ├── admin/
+│   │   │   ├── dashboard.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── reports.tsx
+│   │   │   ├── users.tsx
+│   │   ├── appointments/
+│   │   │   ├── index.tsx
+│   │   ├── doctor/
+│   │   │   ├── appointments.tsx
+│   │   │   ├── dashboard.tsx
+│   │   │   ├── diagnosis.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── patients.tsx
+│   │   │   ├── prescriptions.tsx
+│   │   ├── index.tsx
+│   │   ├── lab/
+│   │   │   ├── dashboard.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── results.tsx
+│   │   │   ├── tests.tsx
+│   │   ├── login.tsx
+│   │   ├── logout.tsx
+│   │   ├── patient/
+│   │   │   ├── appointments.tsx
+│   │   │   ├── dashborad.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── medical-history.tsx
+│   │   │   ├── profile.tsx
+│   │   │   ├── progress.tsx
+│   │   │   ├── results.tsx
+│   │   ├── prescriptions/
+│   │   │   ├── index.tsx
+│   │   ├── _app.tsx
+│   ├── public/
+│   │   ├── favicon.ico
+│   │   ├── icons/
+│   │   │   ├── dashboard.svg
+│   │   │   ├── notification.svg
+│   │   │   ├── user.svg
+│   │   ├── images/
+│   │   │   ├── banner.jpg
+│   │   │   ├── logo.png
+│   ├── routes/
+│   │   ├── PrivateRoutes.js
+│   ├── styles/
+│   │   ├── NavigationBar.module.css
+│   ├── tsconfig.json
+│   ├── utils/
+│   │   ├── auth.js
+├── tests/
+│   ├── backend/
+│   │   ├── auth.test.js
+│   ├── e2e/
+│   │   ├── login.e2e.test.ts
+│   ├── frontend/
+│   │   ├── login.test.tsx

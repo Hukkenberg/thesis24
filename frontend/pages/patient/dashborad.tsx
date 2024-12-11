@@ -1,34 +1,66 @@
-import { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export default function PatientDashboard() {
-  const [appointments, setAppointments] = useState([]);
-  const [notifications, setNotifications] = useState([]);
+const PatientDashboard = () => {
+    const [patient, setPatient] = useState(null);
+    const [formData, setFormData] = useState({
+        personalInfo: '',
+        clinicalInfo: '',
+    });
 
-  useEffect(() => {
-    fetch('/api/patient/appointments')
-      .then((res) => res.json())
-      .then((data) => setAppointments(data.data));
+    useEffect(() => {
+        // Fetch patient data on load
+        axios.get('/api/patient/123') // Replace with dynamic patient ID
+            .then(response => {
+                setPatient(response.data);
+                setFormData({
+                    personalInfo: response.data.personalInfo,
+                    clinicalInfo: response.data.clinicalInfo,
+                });
+            })
+            .catch(error => console.error('Error fetching patient data:', error));
+    }, []);
 
-    fetch('/api/patient/notifications')
-      .then((res) => res.json())
-      .then((data) => setNotifications(data));
-  }, []);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <h2>Upcoming Appointments</h2>
-      <ul>
-        {appointments.map((appt) => (
-          <li key={appt.id}>{appt.date} with {appt.doctor}</li>
-        ))}
-      </ul>
-      <h2>Notifications</h2>
-      <ul>
-        {notifications.map((note) => (
-          <li key={note.id}>{note.message}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
+    const handleSave = () => {
+        axios.put('/api/patient/update', { patientId: 123, ...formData }) // Replace with dynamic patient ID
+            .then(() => alert('Information updated successfully'))
+            .catch(error => console.error('Error updating patient information:', error));
+    };
+
+    return (
+        <div>
+            <h1>Patient Dashboard</h1>
+            {patient ? (
+                <form>
+                    <div>
+                        <label>Personal Info:</label>
+                        <textarea
+                            name="personalInfo"
+                            value={formData.personalInfo}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <div>
+                        <label>Clinical Info:</label>
+                        <textarea
+                            name="clinicalInfo"
+                            value={formData.clinicalInfo}
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                    <button type="button" onClick={handleSave}>Save</button>
+                    <button type="button" onClick={() => setFormData(patient)}>Cancel</button>
+                </form>
+            ) : (
+                <p>Loading...</p>
+            )}
+        </div>
+    );
+};
+
+export default PatientDashboard;

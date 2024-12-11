@@ -1,37 +1,34 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const User = require('./User');
-const Patient = require('./Patient');
+const sequelize = require('../config/database'); // Assuming this is your Sequelize instance.
 
 const Appointment = sequelize.define('Appointment', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
-  },
-  date: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
-  doctorId: {
-    type: DataTypes.UUID,
-    references: {
-      model: User,
-      key: 'id',
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
     },
-    allowNull: false,
-  },
-  patientId: {
-    type: DataTypes.UUID,
-    references: {
-      model: Patient,
-      key: 'id',
+    patientId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: { model: 'Patients', key: 'id' },
     },
-    allowNull: false,
-  },
+    doctorId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: { model: 'Doctors', key: 'id' },
+    },
+    date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+    },
+    time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+    },
+    status: {
+        type: DataTypes.ENUM('scheduled', 'completed', 'canceled'),
+        defaultValue: 'scheduled',
+    },
 });
-
-Appointment.belongsTo(User, { foreignKey: 'doctorId', as: 'doctor' });
-Appointment.belongsTo(Patient, { foreignKey: 'patientId', as: 'patient' });
 
 module.exports = Appointment;

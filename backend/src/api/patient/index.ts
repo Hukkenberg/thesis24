@@ -1,27 +1,38 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import express from 'express';
+import { authMiddleware } from '../../middlewares/authMiddleware';
+import { PatientModel } from '../../models/Patient';
 
-const patients = [
-  { id: 1, name: 'Nguyen Van A', age: 30, gender: 'male' },
-  { id: 2, name: 'Tran Thi B', age: 25, gender: 'female' },
-];
+const router = express.Router();
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { page = 1, limit = 10, search } = req.query;
-  const start = (parseInt(page as string) - 1) * parseInt(limit as string);
-  const end = start + parseInt(limit as string);
+// Update patient information
+router.put('/update', authMiddleware, async (req, res) => {
+    const { patientId, personalInfo, clinicalInfo } = req.body;
+    if (!patientId || !personalInfo || !clinicalInfo) {
+        return res.status(400).send('Missing required fields');
+    }
 
-  let result = patients;
+    try {
+        await PatientModel.updateOne(
+            { _id: patientId },
+            { $set: { personalInfo, clinicalInfo } }
+        );
+        res.status(200).send('Patient information updated successfully');
+    } catch (error) {
+        res.status(500).send('Error updating patient information');
+    }
+});
 
-  if (search) {
-    result = result.filter((patient) =>
-      patient.name.toLowerCase().includes((search as string).toLowerCase())
-    );
-  }
+// Fetch patient information
+router.get('/:patientId', authMiddleware, async (req, res) => {
+    const { patientId } = req.params;
 
-  res.status(200).json({
-    total: result.length,
-    page: parseInt(page as string),
-    limit: parseInt(limit as string),
-    data: result.slice(start, end),
-  });
-}
+    try {
+        const patient = await PatientModel.findById(patientId);
+        if (!patient) return res.status(404).send('Patient not found');
+        res.status(200).json(patient);
+    } catch (error) {
+        res.status(500).send('Error fetching patient information');
+    }
+});
+
+export default router;
