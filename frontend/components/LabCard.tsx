@@ -1,4 +1,10 @@
-export default function LabCard({ labTest }) {
+interface LabTest {
+  type: string;
+  patient: string;
+  status: string;
+}
+
+export default function LabCard({ labTest }: { labTest: LabTest }) {
   return (
     <div className="card">
       <h2>{labTest.type}</h2>
