@@ -12,9 +12,15 @@ export default function Home(): JSX.Element {
         <p>Select an option from the menu to begin.</p>
         <nav className="dashboard-nav">
           <ul>
-            <li><Link href="/patients">Quản Lý Bệnh Nhân</Link></li>
-            <li><Link href="/info">Thông Tin</Link></li>
-            <li><Link href="/process">Quản Lý Tiến Trình</Link></li>
+            <li>
+              <Link href="/patients">Quản Lý Bệnh Nhân</Link>
+            </li>
+            <li>
+              <Link href="/info">Thông Tin</Link>
+            </li>
+            <li>
+              <Link href="/process">Quản Lý Tiến Trình</Link>
+            </li>
           </ul>
         </nav>
       </div>
