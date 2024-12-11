@@ -22,8 +22,8 @@ exports.createPatient = async (req, res) => {
 exports.deletePatient = async (req, res) => {
   try {
     const { id } = req.params;
-    const patient = await Patient.destroy({ where: { id } });
-    if (!patient) {
+    const deleted = await Patient.destroy({ where: { id } });
+    if (!deleted) {
       return res.status(404).json({ error: 'Patient not found' });
     }
     res.status(200).json({ message: 'Patient deleted successfully' });
@@ -41,11 +41,11 @@ exports.updatePatient = async (req, res) => {
       { where: { id }, returning: true }
     );
     if (!updated) {
-      return res.status(404).json({ error: 'Patient not found.' });
+      return res.status(404).json({ error: 'Patient not found' });
     }
     const updatedPatient = await Patient.findByPk(id);
-    res.status(200).json({ patient: updatedPatient, message: 'Patient updated successfully.' });
+    res.status(200).json({ patient: updatedPatient, message: 'Patient updated successfully' });
   } catch (err) {
-    res.status(500).json({ error: 'Failed to update patient.' });
+    res.status(500).json({ error: 'Failed to update patient' });
   }
 };
