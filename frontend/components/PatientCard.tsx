@@ -1,4 +1,11 @@
-export default function PatientCard({ patient }) {
+interface Patient {
+  name: string;
+  age: number;
+  gender: 'male' | 'female' | 'other';
+  diagnosis?: string;
+}
+
+export default function PatientCard({ patient }: { patient: Patient }) {
   return (
     <div className="card">
       <h2>{patient.name}</h2>
