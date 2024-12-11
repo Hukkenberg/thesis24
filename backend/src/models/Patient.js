@@ -35,4 +35,5 @@ const Patient = sequelize.define('Patient', {
 });
 
 Patient.belongsTo(User, { foreignKey: 'doctorId', as: 'doctor' });
+
 module.exports = Patient;
