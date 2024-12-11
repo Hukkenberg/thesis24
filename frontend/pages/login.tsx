@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 export default function Login(): JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -18,10 +19,10 @@ export default function Login(): JSX.Element {
         localStorage.setItem('token', data.token);
         router.push('/');
       } else {
-        alert(data.error || 'Đăng nhập thất bại');
+        setError(data.error || 'Login failed');
       }
-    } catch (err) {
-      alert('Có lỗi xảy ra khi đăng nhập');
+    } catch {
+      setError('An error occurred during login');
     }
   };
 
@@ -40,6 +41,7 @@ export default function Login(): JSX.Element {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <button onClick={handleLogin}>Đăng nhập</button>
     </div>
   );
