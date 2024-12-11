@@ -13,7 +13,7 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   );
 }
 
-function MainLayout({ children }: { children: React.ReactNode }) {
+function MainLayout({ children }: { children: React.ReactNode }): JSX.Element {
   const { role } = useAuth();
   return (
     <div className="app">
