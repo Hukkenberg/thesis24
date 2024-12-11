@@ -17,7 +17,9 @@
     "jsonwebtoken": "^9.0.0",
     "@fullcalendar/react": "^6.0.0",
     "@fullcalendar/daygrid": "^6.0.0",
-    "@fullcalendar/core": "^6.0.0"
+    "@fullcalendar/core": "^6.0.0",
+    "react-chartjs-2": "^5.0.0",
+    "chart.js": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "18.0.26",
@@ -26,7 +28,8 @@
     "@types/jsonwebtoken": "^9.0.0",
     "typescript": "5.1.6",
     "eslint": "8.37.0",
-    "eslint-config-next": "13.4.4"
+    "eslint-config-next": "13.4.4",
+    "@types/react-chartjs-2": "^5.0.0"
   },
   "engines": {
     "node": ">=16.8.0",
