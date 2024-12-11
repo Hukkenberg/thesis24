@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 
+interface Appointment {
+  id: string;
+  date: string;
+  doctor: string;
+  status: string;
+}
+
 export default function Appointments() {
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     fetch('/api/patient/appointments')
