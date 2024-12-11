@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
 
-export default function Patients() {
-  const [patients, setPatients] = useState([]);
+interface Patient {
+  id: string;
+  name: string;
+  age: number;
+  gender: 'male' | 'female' | 'other';
+}
+
+export default function Patients(): JSX.Element {
+  const [patients, setPatients] = useState<Patient[]>([]);
 
   useEffect(() => {
     fetch('/api/doctor/patients')
       .then((res) => res.json())
-      .then((data) => setPatients(data.data));
+      .then((data) => setPatients(data.data))
+      .catch((error) => console.error('Error fetching patients:', error));
   }, []);
 
   return (
@@ -14,7 +22,9 @@ export default function Patients() {
       <h1>Patients</h1>
       <ul>
         {patients.map((patient) => (
-          <li key={patient.id}>{patient.name} - {patient.age} years - {patient.gender}</li>
+          <li key={patient.id}>
+            {patient.name} - {patient.age} years - {patient.gender}
+          </li>
         ))}
       </ul>
     </div>
