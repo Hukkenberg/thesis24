@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const { sequelize } = require('../config/db');
 
 const User = sequelize.define('User', {
   id: {
@@ -28,6 +28,8 @@ const User = sequelize.define('User', {
     defaultValue: 'patient',
     allowNull: false,
   },
+}, {
+  timestamps: true,
 });
 
 module.exports = User;
