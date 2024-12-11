@@ -1,8 +1,10 @@
-const PatientCard = ({ patient }: { patient: { name: string, age: number } }) => (
-  <div>
-    <h3>{patient.name}</h3>
-    <p>Age: {patient.age}</p>
-  </div>
-);
-
-export default PatientCard;
+export default function PatientCard({ patient }) {
+  return (
+    <div className="card">
+      <h2>{patient.name}</h2>
+      <p>Age: {patient.age}</p>
+      <p>Gender: {patient.gender}</p>
+      <p>Diagnosis: {patient.diagnosis || 'N/A'}</p>
+    </div>
+  );
+}

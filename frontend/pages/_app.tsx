@@ -1,12 +1,24 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { Provider } from 'react-redux';
-import { store } from '../redux/store';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+import NavigationBar from '../components/NavigationBar';
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <AuthProvider>
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
+    </AuthProvider>
+  );
+}
+
+function MainLayout({ children }: { children: React.ReactNode }) {
+  const { role } = useAuth();
+  return (
+    <div className="app">
+      <NavigationBar role={role} />
+      <main className="main-content">{children}</main>
+    </div>
   );
 }

@@ -1,37 +1,29 @@
-// frontend/pages/lab/results.tsx
-import { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar';
-import { fetchData } from '../../utils/api';
-import Chart from 'chart.js';
-import styles from '../../styles/Profile.module.css';
+import { useState } from 'react';
 
-const LabResults = () => {
-  const [results, setResults] = useState([]);
+interface LabResult {
+  id: number;
+  patientName: string;
+  result: string;
+}
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      const data = await fetchData('/api/lab/results');
-      setResults(data);
-    };
-    fetchResults();
-  }, []);
+export default function LabResults(): JSX.Element {
+  const [results, setResults] = useState<LabResult[]>([
+    { id: 1, patientName: 'Nguyễn Văn A', result: 'Bình thường' },
+    { id: 2, patientName: 'Trần Thị B', result: 'Cần theo dõi' },
+  ]);
 
   return (
     <div>
-      <Navbar />
-      <div className={styles.container}>
-        <h2>Lab Results</h2>
-        <canvas id="labResultsChart"></canvas>
-        <ul>
-          {results.map((result: any) => (
-            <li key={result.id}>
-              {result.name}: {result.value}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <h1>Quản lý kết quả xét nghiệm</h1>
+      <ul>
+        {results.map((result) => (
+          <li key={result.id}>
+            Bệnh nhân: {result.patientName} - Kết quả: {result.result}
+            <button onClick={() => alert(`Cập nhật kết quả cho ${result.patientName}`)}>Cập nhật</button>
+          </li>
+        ))}
+      </ul>
+      <button onClick={() => alert('Thêm kết quả mới')}>Thêm kết quả mới</button>
     </div>
   );
-};
-
-export default LabResults;
+}

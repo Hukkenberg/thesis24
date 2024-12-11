@@ -1,37 +1,16 @@
-// frontend/pages/patient/index.tsx
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPatients } from '../../redux/patientSlice';
-import Navbar from '../../components/Navbar';
-import PatientCard from '../../components/PatientCard';
-import styles from '../../styles/Profile.module.css';
+import Link from 'next/link';
 
-const PatientList = () => {
-  const dispatch = useDispatch();
-  const { data: patients, status, error } = useSelector((state) => state.patients);
-
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchPatients());
-    }
-  }, [dispatch, status]);
-
-  if (status === 'loading') return <p>Loading patients...</p>;
-  if (status === 'failed') return <p>{error}</p>;
-
+export default function PatientDashboard(): JSX.Element {
   return (
-    <div>
-      <Navbar />
-      <div className={styles.container}>
-        <h2>Danh sách bệnh nhân</h2>
-        <div className={styles.grid}>
-          {patients.map((patient) => (
-            <PatientCard key={patient.id} patient={patient} />
-          ))}
-        </div>
-      </div>
+    <div className="dashboard">
+      <h1>Trang chủ bệnh nhân</h1>
+      <nav>
+        <ul>
+          <li><Link href="/patient/appointments">Lịch hẹn</Link></li>
+          <li><Link href="/patient/results">Kết quả xét nghiệm</Link></li>
+          <li><Link href="/patient/profile">Hồ sơ cá nhân</Link></li>
+        </ul>
+      </nav>
     </div>
   );
-};
-
-export default PatientList;
+}

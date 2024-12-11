@@ -1,51 +1,46 @@
-// frontend/pages/login.tsx
 import { useState } from 'react';
-import { postData } from '../utils/api';
-import styles from '../styles/Profile.module.css';
+import { useRouter } from 'next/router';
 
-const Login = () => {
-  const [username, setUsername] = useState('');
+export default function Login(): JSX.Element {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const router = useRouter();
 
-  const handleLogin = async (e: any) => {
-    e.preventDefault();
+  const handleLogin = async () => {
     try {
-      const { token } = await postData('/api/auth/login', { username, password });
-      alert('Login successful!');
-      setError('');
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem('token', data.token);
+        router.push('/');
+      } else {
+        alert(data.error || 'Đăng nhập thất bại');
+      }
     } catch (err) {
-      setError('Invalid username or password.');
+      alert('Có lỗi xảy ra khi đăng nhập');
     }
   };
 
   return (
-    <div className={styles.authContainer}>
-      <form onSubmit={handleLogin}>
-        <h2>Login</h2>
-        {error && <p className={styles.error}>{error}</p>}
-        <div className={styles.row}>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.row}>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+    <div>
+      <h1>Đăng nhập</h1>
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Mật khẩu"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button onClick={handleLogin}>Đăng nhập</button>
     </div>
   );
-};
-
-export default Login;
+}
