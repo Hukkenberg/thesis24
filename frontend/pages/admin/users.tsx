@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react';
 
+interface User {
+  id: string;
+  name: string;
+  role: string;
+}
+
 export default function AdminUsers() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
     fetch('/api/admin/users')
