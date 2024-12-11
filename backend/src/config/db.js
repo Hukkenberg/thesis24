@@ -1,19 +1,21 @@
 const { Sequelize } = require('sequelize');
 
-// Check if the DATABASE_URL environment variable is set
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is not set.');
-}
-
-// Initialize Sequelize with the DATABASE_URL
+// Get database URL from environment variables
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  logging: false,
+  protocol: 'postgres',
+  logging: false, // Disable logging (optional)
+  dialectOptions: {
+    ssl: {
+      require: true, // Enforce SSL connection
+      rejectUnauthorized: false, // Allow self-signed certificates (if applicable)
+    },
+  },
 });
 
-// Test database connection
-sequelize.authenticate()
-  .then(() => console.log('Database connected successfully.'))
-  .catch(err => console.error('Unable to connect to the database:', err));
+sequelize
+  .authenticate()
+  .then(() => console.log('Database connected successfully'))
+  .catch((err) => console.error('Unable to connect to the database:', err));
 
 module.exports = sequelize;
