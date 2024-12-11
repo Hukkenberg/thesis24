@@ -1,21 +1,26 @@
 const { Sequelize } = require('sequelize');
+const { DB_URI } = require('./environment');
 
-// Get database URL from environment variables
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+const sequelize = new Sequelize(DB_URI, {
   dialect: 'postgres',
   protocol: 'postgres',
-  logging: false, // Disable logging (optional)
+  logging: false,
   dialectOptions: {
     ssl: {
-      require: true, // Enforce SSL connection
-      rejectUnauthorized: false, // Allow self-signed certificates (if applicable)
+      require: true,
+      rejectUnauthorized: false,
     },
   },
 });
 
-sequelize
-  .authenticate()
-  .then(() => console.log('Database connected successfully'))
-  .catch((err) => console.error('Unable to connect to the database:', err));
+const dbConnect = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connected successfully');
+  } catch (err) {
+    console.error('Unable to connect to the database:', err);
+    process.exit(1);
+  }
+};
 
-module.exports = sequelize;
+module.exports = { sequelize, dbConnect };
