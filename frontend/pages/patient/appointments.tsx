@@ -7,13 +7,14 @@ interface Appointment {
   status: string;
 }
 
-export default function Appointments() {
+export default function Appointments(): JSX.Element {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   useEffect(() => {
     fetch('/api/patient/appointments')
       .then((res) => res.json())
-      .then((data) => setAppointments(data.data));
+      .then((data) => setAppointments(data.data))
+      .catch((error) => console.error('Error fetching appointments:', error));
   }, []);
 
   return (
@@ -21,7 +22,9 @@ export default function Appointments() {
       <h1>Appointments</h1>
       <ul>
         {appointments.map((appt) => (
-          <li key={appt.id}>{appt.date} with {appt.doctor} - {appt.status}</li>
+          <li key={appt.id}>
+            {appt.date} with {appt.doctor} - {appt.status}
+          </li>
         ))}
       </ul>
     </div>
