@@ -1,4 +1,11 @@
-export default function AdminCard({ admin }) {
+interface Admin {
+  name: string;
+  role: string;
+  email: string;
+  activeAccounts: number;
+}
+
+export default function AdminCard({ admin }: { admin: Admin }) {
   return (
     <div className="card">
       <h2>{admin.name}</h2>
