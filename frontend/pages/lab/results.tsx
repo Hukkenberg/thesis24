@@ -12,6 +12,14 @@ export default function LabResults(): JSX.Element {
     { id: 2, patientName: 'Trần Thị B', result: 'Cần theo dõi' },
   ]);
 
+  const handleUpdate = (patientName: string) => {
+    alert(`Cập nhật kết quả cho ${patientName}`);
+  };
+
+  const handleAddResult = () => {
+    alert('Thêm kết quả mới');
+  };
+
   return (
     <div>
       <h1>Quản lý kết quả xét nghiệm</h1>
@@ -19,11 +27,11 @@ export default function LabResults(): JSX.Element {
         {results.map((result) => (
           <li key={result.id}>
             Bệnh nhân: {result.patientName} - Kết quả: {result.result}
-            <button onClick={() => alert(`Cập nhật kết quả cho ${result.patientName}`)}>Cập nhật</button>
+            <button onClick={() => handleUpdate(result.patientName)}>Cập nhật</button>
           </li>
         ))}
       </ul>
-      <button onClick={() => alert('Thêm kết quả mới')}>Thêm kết quả mới</button>
+      <button onClick={handleAddResult}>Thêm kết quả mới</button>
     </div>
   );
 }
