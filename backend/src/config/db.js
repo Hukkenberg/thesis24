@@ -1,6 +1,10 @@
 const { Sequelize } = require('sequelize');
 const { DATABASE_URL } = require('./environment');
 
+if (!DATABASE_URL) {
+  throw new Error('DATABASE_URL is not defined in the environment variables.');
+}
+
 const sequelize = new Sequelize(DATABASE_URL, {
   dialect: 'postgres',
   protocol: 'postgres',
