@@ -2,7 +2,7 @@ const Patient = require('../models/Patient');
 
 exports.getAllPatients = async (req, res) => {
   try {
-    const patients = await Patient.find({}).populate('doctorId', 'name email');
+    const patients = await Patient.findAll({ include: [{ association: 'doctor', attributes: ['name', 'email'] }] });
     res.status(200).json(patients);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch patients' });
@@ -22,7 +22,7 @@ exports.createPatient = async (req, res) => {
 exports.deletePatient = async (req, res) => {
   try {
     const { id } = req.params;
-    const patient = await Patient.findByIdAndDelete(id);
+    const patient = await Patient.destroy({ where: { id } });
     if (!patient) {
       return res.status(404).json({ error: 'Patient not found' });
     }
@@ -36,11 +36,15 @@ exports.updatePatient = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, age, gender, diagnosis } = req.body;
-    const patient = await Patient.update(
+    const [updated] = await Patient.update(
       { name, age, gender, diagnosis },
       { where: { id }, returning: true }
     );
-    res.status(200).json({ patient, message: 'Patient updated successfully.' });
+    if (!updated) {
+      return res.status(404).json({ error: 'Patient not found.' });
+    }
+    const updatedPatient = await Patient.findByPk(id);
+    res.status(200).json({ patient: updatedPatient, message: 'Patient updated successfully.' });
   } catch (err) {
     res.status(500).json({ error: 'Failed to update patient.' });
   }
