@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 
+interface Patient {
+  id: string;
+  name: string;
+  age: number;
+}
+
 export default function DoctorDashboard() {
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] = useState<Patient[]>([]);
 
   useEffect(() => {
     fetch('/api/doctor/patients')
       .then((res) => res.json())
-      .then((data) => setPatients(data.data));
+      .then((data) => setPatients(data.data))
+      .catch((error) => console.error('Error fetching patients:', error));
   }, []);
 
   return (
@@ -15,7 +22,9 @@ export default function DoctorDashboard() {
       <h2>My Patients</h2>
       <ul>
         {patients.map((patient) => (
-          <li key={patient.id}>{patient.name} - {patient.age} years</li>
+          <li key={patient.id}>
+            {patient.name} - {patient.age} years
+          </li>
         ))}
       </ul>
     </div>
