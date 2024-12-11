@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
-const { DB_URI } = require('./environment');
+const { DATABASE_URL } = require('./environment');
 
-const sequelize = new Sequelize(DB_URI, {
+const sequelize = new Sequelize(DATABASE_URL, {
   dialect: 'postgres',
   protocol: 'postgres',
   logging: false,
