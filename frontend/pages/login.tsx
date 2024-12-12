@@ -8,7 +8,6 @@ const Login = () => {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  // Logging input changes
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Email input changed:', e.target.value);
     setEmail(e.target.value);
@@ -19,7 +18,6 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  // Handle login logic with logging
   const handleLogin = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -47,8 +45,13 @@ const Login = () => {
 
       router.push('/');
     } catch (err) {
-      console.error('Network error during login:', err.message);
-      setError('Network error: Unable to connect to server');
+      if (err instanceof Error) {
+        console.error('Network error during login:', err.message);
+        setError('Network error: Unable to connect to server');
+      } else {
+        console.error('Unexpected error during login:', err);
+        setError('An unexpected error occurred.');
+      }
     }
   };
 
