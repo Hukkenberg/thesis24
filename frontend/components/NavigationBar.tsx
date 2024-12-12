@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
-=======
-import Link from 'next/link';
-import { useAuth } from '../context/AuthContext';
-import { useState } from 'react';
-
->>>>>>> 8346c4b69678710acf5ca23e3cbe94c57e0540ee
 const NavigationBar = () => {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -24,7 +17,6 @@ const NavigationBar = () => {
             <Link href="/">
               <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Trang chủ</a>
             </Link>
-<<<<<<< HEAD
             <Link href="/manage-info">
               <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Quản lý thông tin</a>
             </Link>
@@ -33,13 +25,6 @@ const NavigationBar = () => {
             </Link>
             <Link href="/manage-tools">
               <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Công cụ</a>
-=======
-            <Link href="/about">
-              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Giới thiệu</a>
-            </Link>
-            <Link href="/contact">
-              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Liên hệ</a>
->>>>>>> 8346c4b69678710acf5ca23e3cbe94c57e0540ee
             </Link>
           </div>
           <div className="relative">
