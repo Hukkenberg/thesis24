@@ -23,7 +23,6 @@ const runSQLFile = async (filePath) => {
 const initializeDatabase = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Database connected successfully');
 
     console.log('Creating schema...');
     await runSQLFile(path.join(__dirname, '../schema/schema.sql'));
@@ -38,8 +37,6 @@ const initializeDatabase = async () => {
     if (result[0].length === 0) {
       console.log('Running migrations...');
       await runSQLFile(path.join(__dirname, '../migrations/001_add_email_to_users.sql'));
-    } else {
-      console.log('Migration already applied: email column exists');
     }
 
     console.log('Seeding database...');
