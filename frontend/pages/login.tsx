@@ -9,12 +9,12 @@ const Login = () => {
   const router = useRouter();
 
   // Logging input changes
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Email input changed:', e.target.value);
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Password input changed');
     setPassword(e.target.value);
   };
