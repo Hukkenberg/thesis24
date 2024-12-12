@@ -1,7 +1,27 @@
+interface NavigationBarProps {
+  role: 'patient' | 'doctor' | 'lab' | 'admin';
+}
 
-import Link from 'next/link';
+const NavigationBar = ({ role }: NavigationBarProps) => {
+  const links = {
+    patient: [
+      { href: '/', label: 'Home' },
+      { href: '/appointments', label: 'Appointments' },
+    ],
+    doctor: [
+      { href: '/', label: 'Dashboard' },
+      { href: '/patients', label: 'Patients' },
+    ],
+    lab: [
+      { href: '/', label: 'Tests' },
+      { href: '/reports', label: 'Reports' },
+    ],
+    admin: [
+      { href: '/', label: 'Admin Panel' },
+      { href: '/users', label: 'Users' },
+    ],
+  };
 
-const NavigationBar = () => {
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -10,21 +30,15 @@ const NavigationBar = () => {
             <h1 className="text-xl font-bold text-blue-600">My Modern App</h1>
           </div>
           <div className="flex space-x-4 items-center">
-            <Link href="/">
-              <a className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                Home
+            {links[role].map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+              >
+                {link.label}
               </a>
-            </Link>
-            <Link href="/about">
-              <a className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                About
-              </a>
-            </Link>
-            <Link href="/contact">
-              <a className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
-                Contact
-              </a>
-            </Link>
+            ))}
           </div>
         </div>
       </div>
