@@ -1,3 +1,4 @@
+-- File: database/seeds/001_seed_users.sql
 INSERT INTO users (name, email, password, role, created_at, updated_at)
 VALUES
     ('Admin', 'admin@example.com', '$2a$10$eW5w5/j8h9uhXc8dPpu5DeK3uXHFTNvh7sNuWbN3t8eTr2k.jShFu', 'admin', NOW(), NOW()),
