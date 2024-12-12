@@ -1,3 +1,4 @@
+// File: backend/src/models/User.js
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 const bcrypt = require('bcryptjs');
@@ -30,7 +31,6 @@ const User = sequelize.define('User', {
     allowNull: false,
   },
 }, {
-  timestamps: true,
   hooks: {
     beforeCreate: async (user) => {
       user.password = await bcrypt.hash(user.password, 10);
