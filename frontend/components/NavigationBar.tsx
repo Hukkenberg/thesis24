@@ -1,4 +1,3 @@
-
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
@@ -17,14 +16,11 @@ const NavigationBar = () => {
             <Link href="/">
               <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Trang chủ</a>
             </Link>
-            <Link href="/manage-info">
-              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Quản lý thông tin</a>
+            <Link href="/about">
+              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Giới thiệu</a>
             </Link>
-            <Link href="/manage-progress">
-              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Quản lý tiến trình</a>
-            </Link>
-            <Link href="/manage-tools">
-              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Công cụ</a>
+            <Link href="/contact">
+              <a className="hover:text-blue-400 px-3 py-2 text-sm font-medium">Liên hệ</a>
             </Link>
           </div>
           <div className="relative">
