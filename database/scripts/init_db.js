@@ -28,8 +28,19 @@ const initializeDatabase = async () => {
     console.log('Creating schema...');
     await runSQLFile(path.join(__dirname, '../schema/schema.sql'));
 
-    console.log('Running migrations...');
-    await runSQLFile(path.join(__dirname, '../migrations/001_add_email_to_users.sql'));
+    console.log('Checking migrations...');
+    const result = await sequelize.query(`
+      SELECT column_name 
+      FROM information_schema.columns 
+      WHERE table_name = 'users' AND column_name = 'email';
+    `);
+
+    if (result[0].length === 0) {
+      console.log('Running migrations...');
+      await runSQLFile(path.join(__dirname, '../migrations/001_add_email_to_users.sql'));
+    } else {
+      console.log('Migration already applied: email column exists');
+    }
 
     console.log('Seeding database...');
     await runSQLFile(path.join(__dirname, '../seeds/001_seed_users.sql'));
