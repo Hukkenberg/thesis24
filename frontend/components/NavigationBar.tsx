@@ -3,7 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
 const NavigationBar = () => {
-  const { user, logout } = useAuth() || {}; // Safely destructure user and logout
+  const auth = useAuth();
+  const user = auth?.user || null;
+  const logout = auth?.logout || (() => {});
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
