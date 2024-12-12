@@ -1,10 +1,11 @@
-
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
 const NavigationBar = () => {
-  const { user, logout } = useAuth();
+  const auth = useAuth();
+  const user = auth?.user;
+  const logout = auth?.logout;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
