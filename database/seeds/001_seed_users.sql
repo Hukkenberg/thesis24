@@ -1,14 +1,8 @@
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pgcrypto') THEN
-        CREATE EXTENSION pgcrypto;
-    END IF;
-END
-$$;
-
 INSERT INTO users (name, email, password, role, created_at, updated_at)
 VALUES
-    ('Admin User', 'admin@example.com', crypt('admin_password', gen_salt('bf')), 'admin', NOW(), NOW()),
-    ('Doctor User', 'doctor@example.com', crypt('doctor_password', gen_salt('bf')), 'doctor', NOW(), NOW()),
-    ('Lab User', 'lab@example.com', crypt('lab_password', gen_salt('bf')), 'lab', NOW(), NOW()),
-    ('Patient User', 'patient@example.com', crypt('patient_password', gen_salt('bf')), 'patient', NOW(), NOW());
+    ('Admin', 'admin@example.com', '$2a$10$eW5w5/j8h9uhXc8dPpu5DeK3uXHFTNvh7sNuWbN3t8eTr2k.jShFu', 'admin', NOW(), NOW()),
+    ('Doctor', 'doctor_user@example.com', '$2a$10$dOZ7RbvKP45OfHlpF2eLsOTTT8wOiM8rHJX4LY/69BJ6fh7XZ8hOe', 'doctor', NOW(), NOW()),
+    ('Patient One', 'patient_one@example.com', '$2a$10$4Fs1MvjS7DNWAlOHup5bUuZTc1YY8UvrNyz89vRmiIjlWpqUqpkxC', 'patient', NOW(), NOW()),
+    ('Patient Two', 'patient_two@example.com', '$2a$10$4Fs1MvjS7DNWAlOHup5bUuZTc1YY8UvrNyz89vRmiIjlWpqUqpkxC', 'patient', NOW(), NOW()),
+    ('Patient Three', 'patient_three@example.com', '$2a$10$4Fs1MvjS7DNWAlOHup5bUuZTc1YY8UvrNyz89vRmiIjlWpqUqpkxC', 'patient', NOW(), NOW()),
+    ('Lab', 'lab_user@example.com', '$2a$10$CxBy3Io8FHscTpuI7lgHROjc/2S89fIZbsUVG5I42tSxCSG5owpWa', 'lab', NOW(), NOW());
