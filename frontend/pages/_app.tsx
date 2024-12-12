@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }: AppProps): JSX.Element {
 }
 
 function MainLayout({ children }: { children: React.ReactNode }): JSX.Element {
-  const { role } = useAuth() || { role: 'guest' }; // Default to guest if role is undefined
+  const { role } = useAuth();
   return (
     <div className="app">
       <NavigationBar role={role} />
