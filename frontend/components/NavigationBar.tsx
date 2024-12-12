@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
 const NavigationBar = () => {
-  const { user, logout } = useAuth(); // Assumes AuthContextProps includes 'user' and 'logout'
+  const { role, user, logout } = useAuth(); // Consume role directly from AuthContext
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
