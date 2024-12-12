@@ -23,7 +23,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_users
 BEFORE UPDATE ON users
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
@@ -38,7 +38,7 @@ CREATE TABLE patients (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_patients
 BEFORE UPDATE ON patients
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
@@ -51,7 +51,7 @@ CREATE TABLE doctors (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_doctors
 BEFORE UPDATE ON doctors
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
@@ -66,7 +66,7 @@ CREATE TABLE lab_results (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_lab_results
 BEFORE UPDATE ON lab_results
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
@@ -82,7 +82,7 @@ CREATE TABLE appointments (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_appointments
 BEFORE UPDATE ON appointments
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
@@ -98,7 +98,7 @@ CREATE TABLE prescriptions (
     updated_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TRIGGER set_updated_at
+CREATE TRIGGER set_updated_at_prescriptions
 BEFORE UPDATE ON prescriptions
 FOR EACH ROW
 EXECUTE FUNCTION update_updated_at_column();
