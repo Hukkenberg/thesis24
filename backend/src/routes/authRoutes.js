@@ -1,10 +1,12 @@
+// File: backend/src/routes/authRoutes.js
 const express = require('express');
-const { login, refreshToken, verifyToken } = require('../controllers/authController'); // Ensure all methods are correctly exported
-const { validateLogin } = require('../validators/authValidator'); // Ensure this method exists and is implemented
+const { login, logout } = require('../controllers/authController');
+const { validateLogin } = require('../middlewares/validateRequest');
+const { authenticate } = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.post('/login', validateLogin, login); // ValidateLogin must exist
-router.post('/refresh', verifyToken, refreshToken); // verifyToken must be properly imported
+router.post('/login', validateLogin, login);
+router.post('/logout', authenticate, logout);
 
 module.exports = router;
