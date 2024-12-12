@@ -1,3 +1,2 @@
-
--- Migration: Add email to users
-ALTER TABLE users ADD COLUMN email VARCHAR(255);
+ALTER TABLE users
+ADD COLUMN email VARCHAR(255) UNIQUE NOT NULL;

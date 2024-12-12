@@ -1,4 +1,6 @@
-INSERT INTO users (username, password, role) VALUES
-('admin', '$2b$10$YUhSKuSJqZ7l9PNxPIg8uO9X1iwpBjCJ6JKZtyQexk/cL5fzKFGNe', 'admin'), -- Password: adminpassword
-('doctor1', '$2b$10$hghGHn1wUIXYfdoWbFqds/Rzyh6x9EFROH3FTY56FsYkAMPR49NQK', 'doctor'), -- Password: doctorpassword
-('patient1', '$2b$10$hUHjSsj3xUwYYnfpKRHyF.nM/LdxqTQKVIcVwHZpViOXR9r/kfw/u', 'patient'); -- Password: patientpassword
+INSERT INTO users (name, email, password, role, created_at, updated_at)
+VALUES
+  ('Admin User', 'admin@example.com', crypt('admin_password', gen_salt('bf')), 'admin', NOW(), NOW()),
+  ('Doctor User', 'doctor@example.com', crypt('doctor_password', gen_salt('bf')), 'doctor', NOW(), NOW()),
+  ('Lab User', 'lab@example.com', crypt('lab_password', gen_salt('bf')), 'lab', NOW(), NOW()),
+  ('Patient User', 'patient@example.com', crypt('patient_password', gen_salt('bf')), 'patient', NOW(), NOW());
