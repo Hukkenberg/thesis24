@@ -1,7 +1,7 @@
 const express = require('express');
 const routes = require('./routes');
 const { dbConnect } = require('./config/db');
-const { authenticate } = require('./middlewares/authMiddleware');
+const { authenticate } = require('./middlewares/authenticate');
 const { authorize } = require('./middlewares/roleMiddleware');
 
 const app = express();
