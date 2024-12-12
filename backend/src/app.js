@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000', credentials: true }));
 app.use(express.json());
+app.use(require('./middlewares/errorHandler'));
 
 // Logging middleware
 app.use((req, res, next) => {
