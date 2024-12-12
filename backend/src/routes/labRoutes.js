@@ -1,6 +1,6 @@
 const express = require('express');
 const { getLabResults, updateLabResult } = require('../controllers/labController');
-const { authenticate } = require('../middlewares/authMiddleware');
+const { authenticate } = require('../middlewares/authenticate');
 const { authorize } = require('../middlewares/roleMiddleware');
 
 const router = express.Router();

@@ -6,7 +6,7 @@ const {
   deletePatient,
   updatePatient,
 } = require('../controllers/patientController');
-const { authenticate } = require('../middlewares/authMiddleware');
+const { authenticate } = require('../middlewares/authenticate');
 const { authorize } = require('../middlewares/roleMiddleware');
 const { validatePatientCreation } = require('../validators/patientValidator');
 

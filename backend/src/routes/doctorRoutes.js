@@ -1,6 +1,6 @@
 const express = require('express');
 const { getPatients, updateDiagnosis } = require('../controllers/doctorController');
-const { authenticate } = require('../middlewares/authMiddleware');
+const { authenticate } = require('../middlewares/authenticate');
 const { authorize } = require('../middlewares/roleMiddleware');
 
 const router = express.Router();
