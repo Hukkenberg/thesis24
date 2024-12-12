@@ -5,8 +5,17 @@ export default function Logout(): JSX.Element {
   const router = useRouter();
 
   useEffect(() => {
-    localStorage.removeItem('token');
-    router.push('/login');
+    const logout = async () => {
+      try {
+        await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
+      } catch (err) {
+        console.error('Error during logout:', err);
+      } finally {
+        router.push('/login');
+      }
+    };
+
+    logout();
   }, [router]);
 
   return <div>Đang đăng xuất...</div>;
