@@ -6,6 +6,7 @@ interface Admin {
   name: string;
   role: string;
   email: string;
+  activeAccounts: number;
 }
 
 export default function AdminList() {

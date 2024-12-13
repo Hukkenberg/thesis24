@@ -1,6 +1,5 @@
 interface LabTest {
   id: number;
-  patientId: number;
   testType: string;
   result: string;
   status: string;
@@ -8,10 +7,10 @@ interface LabTest {
 
 export default function LabCard({ test }: { test: LabTest }) {
   return (
-      <div className="bg-white p-4 rounded shadow">
-          <h3 className="text-lg font-bold">{test.testType}</h3>
-          <p>Status: {test.status}</p>
-          <p>Result: {test.result || 'Pending'}</p>
-      </div>
+    <div className="bg-yellow-50 shadow-md rounded-lg p-6 max-w-sm mx-auto">
+      <h2 className="text-lg font-semibold text-yellow-700">{test.testType}</h2>
+      <p className="text-gray-600 mt-2">Status: {test.status}</p>
+      <p className="text-gray-600">Result: {test.result || 'Pending'}</p>
+    </div>
   );
 }

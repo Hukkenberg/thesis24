@@ -6,6 +6,7 @@ interface Patient {
   name: string;
   age: number;
   gender: string;
+  diagnosis?: string;
 }
 
 export default function PatientList() {
