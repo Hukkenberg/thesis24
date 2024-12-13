@@ -1,4 +1,3 @@
-// backend/src/routes/appointmentRoutes.js
 const express = require('express');
 const {
   createAppointment,

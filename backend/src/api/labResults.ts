@@ -1,5 +1,6 @@
 import express from 'express';
 import { authMiddleware } from '../../middlewares/authMiddleware';
+import { rbacMiddleware } from '../../middlewares/rbacMiddleware';
 import { LabResult } from '../../models/labResult';
 
 const router = express.Router();
@@ -17,7 +18,7 @@ router.get('/:patientId', authMiddleware, async (req, res) => {
 });
 
 // Upload new lab result
-router.post('/upload', authMiddleware, async (req, res) => {
+router.post('/upload', authMiddleware, rbacMiddleware(['lab']), async (req, res) => {
     const { patientId, testType, result, status } = req.body;
     if (!patientId || !testType || !result) {
         return res.status(400).send('Missing required fields');
@@ -25,16 +26,20 @@ router.post('/upload', authMiddleware, async (req, res) => {
 
     try {
         const labResult = await LabResult.create({ patientId, testType, result, status: status || 'pending' });
-        res.status(201).send('Lab result uploaded successfully');
+        res.status(201).json(labResult); // Return the created result
     } catch (error) {
         res.status(500).send('Error uploading lab result');
     }
 });
 
 // Request additional tests
-router.post('/:patientId/request-test', authMiddleware, async (req, res) => {
+router.post('/:patientId/request-test', authMiddleware, rbacMiddleware(['doctor', 'lab']), async (req, res) => {
     const { patientId } = req.params;
     const { testType, reason } = req.body;
+
+    if (!testType || !reason) {
+        return res.status(400).send('Missing required fields');
+    }
 
     try {
         const labRequest = await LabResult.create({
@@ -44,7 +49,7 @@ router.post('/:patientId/request-test', authMiddleware, async (req, res) => {
             status: 'requested',
             reason,
         });
-        res.status(201).send('Test request created successfully');
+        res.status(201).json(labRequest); // Return the created request
     } catch (error) {
         res.status(500).send('Error creating test request');
     }

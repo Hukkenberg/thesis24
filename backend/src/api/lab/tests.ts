@@ -1,25 +1,17 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+const express = require('express');
+const { Test } = require('../../models/test');
+const { authMiddleware } = require('../../middlewares');
 
-let tests = [
-  { id: 1, patient: 'Nguyen Van A', type: 'Blood Test', status: 'Pending' },
-  { id: 2, patient: 'Tran Thi B', type: 'X-Ray', status: 'Completed' },
-];
+const router = express.Router();
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    res.status(200).json({ data: tests });
-  } else if (req.method === 'POST') {
-    const { id, patient, type, status } = req.body;
-    if (!id || !patient || !type || !status) {
-      return res.status(400).json({ error: 'Missing required fields' });
+// Fetch all tests
+router.get('/', authMiddleware, async (req, res) => {
+    try {
+        const tests = await Test.findAll();
+        res.status(200).json(tests);
+    } catch (error) {
+        res.status(500).send('Error fetching tests');
     }
-    tests.push({ id, patient, type, status });
-    res.status(201).json({ message: 'Test created successfully' });
-  } else if (req.method === 'DELETE') {
-    const { id } = req.body;
-    tests = tests.filter((test) => test.id !== id);
-    res.status(200).json({ message: 'Test deleted successfully' });
-  } else {
-    res.status(405).json({ error: 'Method not allowed' });
-  }
-}
+});
+
+module.exports = router;

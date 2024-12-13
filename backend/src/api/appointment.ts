@@ -1,6 +1,6 @@
 const express = require('express');
 const { Appointment } = require('../../models/appointment');
-const { authMiddleware } = require('../../middlewares/authMiddleware');
+const { authMiddleware, rbacMiddleware } = require('../../middlewares');
 
 const router = express.Router();
 
@@ -14,23 +14,24 @@ router.get('/', authMiddleware, async (req, res) => {
     }
 });
 
-// Create a new appointment
-router.post('/create', authMiddleware, async (req, res) => {
+// Create an appointment
+router.post('/', authMiddleware, rbacMiddleware(['doctor']), async (req, res) => {
     const { patientId, doctorId, date, time } = req.body;
+
     if (!patientId || !doctorId || !date || !time) {
         return res.status(400).send('Missing required fields');
     }
 
     try {
-        const appointment = await Appointment.create({ patientId, doctorId, date, time });
-        res.status(201).send('Appointment created successfully');
-    } catch (error) {
+        const newAppointment = await Appointment.create({ patientId, doctorId, date, time, status: 'scheduled' });
+        res.status(201).json(newAppointment);
+    } catch (err) {
         res.status(500).send('Error creating appointment');
     }
 });
 
-// Update or cancel an appointment
-router.put('/:id', authMiddleware, async (req, res) => {
+// Update an appointment
+router.put('/:id', authMiddleware, rbacMiddleware(['doctor']), async (req, res) => {
     const { id } = req.params;
     const { date, time, status } = req.body;
 
@@ -39,9 +40,24 @@ router.put('/:id', authMiddleware, async (req, res) => {
         if (!appointment) return res.status(404).send('Appointment not found');
 
         await appointment.update({ date, time, status });
-        res.status(200).send('Appointment updated successfully');
-    } catch (error) {
+        res.status(200).json(appointment);
+    } catch (err) {
         res.status(500).send('Error updating appointment');
+    }
+});
+
+// Delete an appointment
+router.delete('/:id', authMiddleware, rbacMiddleware(['doctor']), async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const appointment = await Appointment.findByPk(id);
+        if (!appointment) return res.status(404).send('Appointment not found');
+
+        await appointment.destroy();
+        res.status(200).send('Appointment deleted');
+    } catch (err) {
+        res.status(500).send('Error deleting appointment');
     }
 });
 

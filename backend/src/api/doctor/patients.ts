@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const doctorPatients = [
-  { id: 1, doctor: 'Dr. A', patient: 'Nguyen Van A', age: 30, gender: 'male' },
-  { id: 2, doctor: 'Dr. B', patient: 'Tran Thi B', age: 25, gender: 'female' },
+  { id: 1, doctorId: 1, patient: 'Nguyen Van A', age: 30, gender: 'male' },
+  { id: 2, doctorId: 1, patient: 'Tran Thi B', age: 25, gender: 'female' },
 ];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -12,8 +12,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(400).json({ error: 'Missing doctorId' });
   }
 
-  const patients = doctorPatients.filter((record) => record.doctor === doctorId);
-
-  res.status(200).json({ data: patients });
+  const patients = doctorPatients.filter((record) => record.doctorId === parseInt(doctorId as string));
+  res.status(200).json(patients);
 }
-

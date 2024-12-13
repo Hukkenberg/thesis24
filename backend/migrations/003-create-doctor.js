@@ -1,27 +1,34 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Doctors', {
-      id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
-      },
-      specialization: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      createdAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-    });
+      await queryInterface.createTable('doctors', {
+          id: {
+              type: Sequelize.UUID,
+              defaultValue: Sequelize.fn('gen_random_uuid'),
+              primaryKey: true,
+          },
+          name: {
+              type: Sequelize.STRING,
+              allowNull: false,
+          },
+          specialization: {
+              type: Sequelize.STRING,
+              allowNull: false,
+          },
+          experience: {
+              type: Sequelize.INTEGER,
+              allowNull: false,
+          },
+          created_at: {
+              type: Sequelize.DATE,
+              defaultValue: Sequelize.fn('NOW'),
+          },
+          updated_at: {
+              type: Sequelize.DATE,
+              defaultValue: Sequelize.fn('NOW'),
+          },
+      });
   },
-
   down: async (queryInterface) => {
-    await queryInterface.dropTable('Doctors');
+      await queryInterface.dropTable('doctors');
   },
 };

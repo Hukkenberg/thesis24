@@ -1,7 +1,10 @@
 const express = require('express');
-const authRouter = require('../api/auth');
+const { login, logout, refreshToken } = require('../controllers/authController');
+
 const router = express.Router();
 
-router.use('/auth', authRouter);
+router.post('/login', login);
+router.post('/logout', logout);
+router.post('/refresh', refreshToken); // Thêm endpoint refresh token
 
 module.exports = router;
