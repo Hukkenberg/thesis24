@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
-import { createContext, useContext } from 'react';
 import NavigationBar from '../components/NavigationBar';
+import { createContext, useContext } from 'react';
 
 const AuthContext = createContext({ role: 'patient' });
 
