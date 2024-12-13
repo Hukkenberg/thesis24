@@ -1,12 +1,18 @@
 import Link from 'next/link';
-import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 
 const NavigationBar = () => {
-  const { user, logout } = useAuth();
+  const user = typeof window !== 'undefined' ? { name: 'John Doe', role: 'patient' } : null;
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
+
+  const logout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+  };
 
   return (
     <nav className="bg-gray-900 text-white shadow-md">
