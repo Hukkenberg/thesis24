@@ -1,7 +1,5 @@
-// File: backend/src/models/User.js
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const bcrypt = require('bcryptjs');
 
 const User = sequelize.define('User', {
   id: {
@@ -22,24 +20,13 @@ const User = sequelize.define('User', {
     },
   },
   password: {
-    type: DataTypes.STRING,
+    type: DataTypes.STRING, // Lưu hash trực tiếp
     allowNull: false,
   },
   role: {
     type: DataTypes.ENUM('admin', 'doctor', 'lab', 'patient'),
     defaultValue: 'patient',
     allowNull: false,
-  },
-}, {
-  hooks: {
-    beforeCreate: async (user) => {
-      user.password = await bcrypt.hash(user.password, 10);
-    },
-    beforeUpdate: async (user) => {
-      if (user.changed('password')) {
-        user.password = await bcrypt.hash(user.password, 10);
-      }
-    },
   },
 });
 

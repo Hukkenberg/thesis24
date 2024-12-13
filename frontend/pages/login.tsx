@@ -9,19 +9,15 @@ const Login = () => {
   const router = useRouter();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Email input changed:', e.target.value);
     setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Password input changed');
     setPassword(e.target.value);
   };
 
   const handleLogin = async () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-    console.log('Login button clicked with:', { email, password });
 
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -30,28 +26,16 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      console.log('API request sent:', `${API_URL}/api/auth/login`);
-      console.log('API response status:', response.status);
-
       if (!response.ok) {
         const errorResponse = await response.json();
-        console.error('API error response:', errorResponse);
         setError(errorResponse.error || 'Login failed');
         return;
       }
 
       const data = await response.json();
-      console.log('Login successful:', data);
-
       router.push('/');
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error('Network error during login:', err.message);
-        setError('Network error: Unable to connect to server');
-      } else {
-        console.error('Unexpected error during login:', err);
-        setError('An unexpected error occurred.');
-      }
+    } catch {
+      setError('Unable to connect to server');
     }
   };
 
