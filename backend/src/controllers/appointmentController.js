@@ -20,3 +20,36 @@ exports.getAppointments = async (req, res) => {
     res.status(500).json({ status: 'error', message: 'Failed to retrieve appointments', data: null });
   }
 };
+
+exports.updateAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { date } = req.body;
+
+    const appointment = await Appointment.findByPk(id);
+    if (!appointment) {
+      return res.status(404).json({ status: 'error', message: 'Appointment not found', data: null });
+    }
+
+    await appointment.update({ date });
+    res.status(200).json({ status: 'success', message: 'Appointment updated successfully', data: appointment });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: 'Failed to update appointment', data: null });
+  }
+};
+
+exports.deleteAppointment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const appointment = await Appointment.findByPk(id);
+    if (!appointment) {
+      return res.status(404).json({ status: 'error', message: 'Appointment not found', data: null });
+    }
+
+    await appointment.destroy();
+    res.status(200).json({ status: 'success', message: 'Appointment deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: 'Failed to delete appointment', data: null });
+  }
+};
