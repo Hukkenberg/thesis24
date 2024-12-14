@@ -13,8 +13,25 @@ export default function PatientDetails({ id }) {
   );
 }
 
-// Dynamic route fetching (placeholder logic for demonstration)
-export async function getServerSideProps(context) {
-  const { id } = context.params;
-  return { props: { id } };
+// Pre-render paths for dynamic routes
+export async function getStaticPaths() {
+  const patients = await fetch("https://api.example.com/patients"); // Replace with actual API
+  const paths = patients.map((patient) => ({
+    params: { id: patient.id.toString() }
+  }));
+
+  return { paths, fallback: false }; // No fallback for invalid paths
+}
+
+// Fetch data at build time
+export async function getStaticProps({ params }) {
+  const { id } = params;
+  const data = await fetch(`https://api.example.com/patients/${id}`); // Replace with actual API
+  const patient = await data.json();
+
+  return {
+    props: {
+      id: patient.id
+    }
+  };
 }

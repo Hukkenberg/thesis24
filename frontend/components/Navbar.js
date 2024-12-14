@@ -1,16 +1,32 @@
-export default function Navbar() {
+
+import Link from "next/link";
+import React from "react";
+
+const navLinks = [
+  { href: "/", label: "Trang chủ" },
+  { href: "/dashboard/patient", label: "Quản lý thông tin" },
+  { href: "/dashboard/doctor", label: "Quản lý tiến trình" },
+  { href: "/dashboard/admin", label: "Quản trị hệ thống" },
+  { href: "/profile/view", label: "Tài khoản" },
+];
+
+function Navbar() {
   return (
     <nav className="navbar bg-blue-500 text-white px-6 py-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold">Hệ thống quản lý</h1>
         <ul className="flex space-x-6">
-          <li><a href="/" className="hover:underline">Trang chủ</a></li>
-          <li><a href="/dashboard/patient" className="hover:underline">Quản lý thông tin</a></li>
-          <li><a href="/dashboard/doctor" className="hover:underline">Quản lý tiến trình</a></li>
-          <li><a href="/dashboard/admin" className="hover:underline">Quản trị hệ thống</a></li>
-          <li><a href="/profile/view" className="hover:underline">Tài khoản</a></li>
+          {navLinks.map(({ href, label }) => (
+            <li key={href}>
+              <Link href={href}>
+                <a className="hover:underline">{label}</a>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </nav>
   );
 }
+
+export default React.memo(Navbar);
