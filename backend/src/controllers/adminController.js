@@ -1,5 +1,3 @@
-const Admin = require('../models/Admin');
-
 exports.getAllAdmins = async (req, res) => {
     try {
         const admins = await Admin.findAll({

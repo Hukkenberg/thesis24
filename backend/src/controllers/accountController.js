@@ -1,5 +1,3 @@
-const Account = require('../models/Account');
-
 exports.getAccountDetails = async (req, res) => {
     try {
         const account = await Account.findByPk(req.user.id);
