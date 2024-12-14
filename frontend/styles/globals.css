@@ -1,9 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Custom global styles */
 body {
-  @apply bg-gray-100 text-gray-900;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4;
+}
+
+.navbar {
+  background-color: #0033cc;
+  color: white;
+}
+
+.sidebar {
+  background-color: #1a1a1a;
+  color: white;
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  padding-top: 20px;
+}
+
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .menu li {
+  margin: 20px 0;
+}
+
+.sidebar .menu li a {
+  color: white;
+  text-decoration: none;
+}
+
+main {
+  margin-left: 250px;
 }

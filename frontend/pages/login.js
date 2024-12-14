@@ -1,83 +1,66 @@
-// File: frontend/pages/login.tsx
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleLogin = async () => {
-    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
-
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-        const response = await fetch(`${API_URL}/api/auth/login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        });
+      const response = await axios.post("/api/auth/login", { email, password });
+      const { role } = response.data;
 
-        if (!response.ok) {
-            const errorResponse = await response.json();
-            setError(errorResponse.message || 'Login failed');
-            return;
-        }
-
-        const data = await response.json();
-        router.push('/');
-    } catch {
-        setError('Unable to connect to server');
+      // Redirect based on role
+      if (role === "admin") {
+        router.push("/dashboard/admin");
+      } else if (role === "doctor") {
+        router.push("/dashboard/doctor");
+      } else if (role === "patient") {
+        router.push("/dashboard/patient");
+      }
+    } catch (err) {
+      setError("Đăng nhập thất bại. Vui lòng kiểm tra thông tin tài khoản.");
     }
   };
 
   return (
-    <div className="p-8 max-w-md mx-auto bg-white shadow-md rounded">
-      <h1 className="text-xl font-semibold mb-4">Login</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1" htmlFor="email">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          className="w-full p-2 border border-gray-300 rounded"
-          value={email}
-          onChange={handleEmailChange}
-        />
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded shadow-md p-6">
+        <h1 className="text-2xl font-bold mb-4">Đăng nhập</h1>
+        {error && <p className="text-red-500">{error}</p>}
+        <form onSubmit={handleLogin}>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              className="w-full px-4 py-2 border rounded"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Mật khẩu</label>
+            <input
+              type="password"
+              className="w-full px-4 py-2 border rounded"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Đăng nhập
+          </button>
+        </form>
       </div>
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-1" htmlFor="password">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          className="w-full p-2 border border-gray-300 rounded"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-      </div>
-
-      <button
-        onClick={handleLogin}
-        className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Login
-      </button>
     </div>
   );
-};
-
-export default Login;
+}
