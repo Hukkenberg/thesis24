@@ -1,9 +1,8 @@
 const { body, validationResult } = require('express-validator');
 
-exports.validatePatientCreation = [
+exports.validateDoctorCreation = [
   body('name').isString().withMessage('Name must be a string'),
-  body('age').isInt({ min: 0 }).withMessage('Age must be a positive integer'),
-  body('gender').isIn(['male', 'female', 'other']).withMessage('Invalid gender'),
+  body('specialization').isString().withMessage('Specialization is required'),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

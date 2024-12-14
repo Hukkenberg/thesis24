@@ -1,29 +1,42 @@
-import { useState } from 'react';
 
-interface Appointment {
-  id: number;
-  patientName: string;
-  date: string;
-  status: string;
-}
+import { useEffect, useState } from 'react';
+import { fetchDoctorAppointments } from '../../api/doctor/appointments';
 
-export default function Appointments(): JSX.Element {
-  const [appointments, setAppointments] = useState<Appointment[]>([
-    { id: 1, patientName: 'Nguyễn Văn A', date: '2024-12-15', status: 'Chờ khám' },
-    { id: 2, patientName: 'Trần Thị B', date: '2024-12-20', status: 'Hoàn tất' },
-  ]);
+const DoctorAppointments = () => {
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function loadAppointments() {
+      try {
+        const data = await fetchDoctorAppointments();
+        setAppointments(data);
+      } catch (err) {
+        setError('Không thể tải danh sách cuộc hẹn');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadAppointments();
+  }, []);
+
+  if (loading) return <p>Đang tải...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <h1>Quản lý lịch hẹn</h1>
+      <h1>Danh sách cuộc hẹn</h1>
       <ul>
-        {appointments.map((appt) => (
-          <li key={appt.id}>
-            {appt.patientName} - Ngày: {appt.date} - Trạng thái: {appt.status}
-            <button onClick={() => alert(`Xử lý lịch hẹn: ${appt.patientName}`)}>Xử lý</button>
+        {appointments.map((appointment) => (
+          <li key={appointment.id}>
+            {appointment.date} - {appointment.status}
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
+
+export default DoctorAppointments;
