@@ -1,63 +1,64 @@
 const LabResult = require('../models/LabResult');
 
-exports.getAllPatients = async (req, res) => {
+exports.getAllLabReports = async (req, res) => {
     try {
-        const patients = await Patient.findAll();
-        res.status(200).json(patients);
+        const labReports = await LabResult.findAll();
+        res.status(200).json(labReports);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to retrieve patients' });
+        res.status(500).json({ error: 'Failed to retrieve lab reports' });
     }
 };
 
-exports.getPatientById = async (req, res) => {
+exports.getLabReportById = async (req, res) => {
     try {
         const { id } = req.params;
-        const patient = await Patient.findByPk(id);
-        if (!patient) {
-            return res.status(404).json({ error: 'Patient not found' });
+        const labReport = await LabResult.findByPk(id);
+        if (!labReport) {
+            return res.status(404).json({ error: 'Lab report not found' });
         }
-        res.status(200).json(patient);
+        res.status(200).json(labReport);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to retrieve patient details' });
+        res.status(500).json({ error: 'Failed to retrieve lab report' });
     }
 };
 
-exports.createPatient = async (req, res) => {
+exports.createLabReport = async (req, res) => {
     try {
-        const { name, age, gender, diagnosis } = req.body;
-        const newPatient = await Patient.create({ name, age, gender, diagnosis });
-        res.status(201).json(newPatient);
+        const { patientId, testName, result } = req.body;
+        const newLabReport = await LabResult.create({ patientId, testName, result });
+        res.status(201).json(newLabReport);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to create patient' });
+        res.status(500).json({ error: 'Failed to create lab report' });
     }
 };
 
-exports.updatePatient = async (req, res) => {
+exports.updateLabReport = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, age, gender, diagnosis } = req.body;
-        const updatedPatient = await Patient.update(
-            { name, age, gender, diagnosis },
+        const { testName, result } = req.body;
+        const [updated] = await LabResult.update(
+            { testName, result },
             { where: { id }, returning: true }
         );
-        if (updatedPatient[0] === 0) {
-            return res.status(404).json({ error: 'Patient not found' });
+        if (updated === 0) {
+            return res.status(404).json({ error: 'Lab report not found' });
         }
-        res.status(200).json(updatedPatient[1][0]);
+        const updatedLabReport = await LabResult.findByPk(id);
+        res.status(200).json(updatedLabReport);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to update patient' });
+        res.status(500).json({ error: 'Failed to update lab report' });
     }
 };
 
-exports.deletePatient = async (req, res) => {
+exports.deleteLabReport = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = await Patient.destroy({ where: { id } });
+        const deleted = await LabResult.destroy({ where: { id } });
         if (!deleted) {
-            return res.status(404).json({ error: 'Patient not found' });
+            return res.status(404).json({ error: 'Lab report not found' });
         }
-        res.status(200).json({ message: 'Patient deleted successfully' });
+        res.status(200).json({ message: 'Lab report deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to delete patient' });
+        res.status(500).json({ error: 'Failed to delete lab report' });
     }
 };

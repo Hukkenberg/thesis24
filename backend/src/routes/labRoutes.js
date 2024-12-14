@@ -1,4 +1,3 @@
-
 const express = require('express');
 const { getAllLabReports, getLabReportById, createLabReport, updateLabReport, deleteLabReport } = require('../controllers/labController');
 const authenticate = require('../middlewares/authenticate');
