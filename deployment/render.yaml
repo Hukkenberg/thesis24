@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: healthcare-frontend
+    env: node
+    buildCommand: yarn install && yarn build
+    startCommand: yarn start
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://backend.example.com/api
+
+  - type: web
+    name: healthcare-backend
+    env: node
+    buildCommand: yarn install
+    startCommand: yarn start
+    plan: free
+    envVars:
+      - key: DB_HOST
+        value: db.internal
+      - key: DB_USER
+        value: postgres
+      - key: DB_PASSWORD
+        value: password
+      - key: DB_NAME
+        value: healthcare

@@ -1,11 +1,11 @@
 const app = require('./app');
-const { sequelize } = require('./src/models');
+const sequelize = require('./src/config/db');
 
 const PORT = process.env.PORT || 5000;
 
-sequelize.sync({ force: false }).then(() => {
-  console.log('Kết nối cơ sở dữ liệu thành công.');
+sequelize.sync().then(() => {
+  console.log('Database connected');
   app.listen(PORT, () => {
-    console.log(`Server đang chạy trên cổng ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 });

@@ -1,37 +1,40 @@
-const { Patient, LabResult } = require('../models');
+const Doctor = require('../models/Doctor');
+const Patient = require('../models/Patient');
 
-exports.getPatients = async (req, res) => {
+// Lấy danh sách bệnh nhân được phân công
+exports.getPatientsByDoctor = async (req, res) => {
   try {
-    const patients = await Patient.findAll({ where: { doctor_id: req.user.id } });
-    res.json(patients);
+    const doctorId = req.user.id; // Lấy ID bác sĩ từ JWT
+    const patients = await Patient.findAll({ where: { doctorId } });
+    res.status(200).json({ patients });
   } catch (error) {
-    res.status(500).send('Lỗi khi lấy danh sách bệnh nhân.');
+    res.status(500).json({ error: error.message });
   }
 };
 
-exports.updateTreatmentPlan = async (req, res) => {
+// Cập nhật chẩn đoán
+exports.updateDiagnosis = async (req, res) => {
   try {
-    const { patientId, diagnosis, treatmentPlan } = req.body;
-    await Patient.update(
-      { diagnosis, treatment_plan: treatmentPlan },
-      { where: { id: patientId } }
+    const { patientId } = req.params;
+    const { diagnosis, treatmentPlan } = req.body;
+    const updatedPatient = await Patient.update(
+      { diagnosis, treatmentPlan },
+      { where: { id: patientId }, returning: true }
     );
-    res.status(200).send('Cập nhật chẩn đoán và kế hoạch điều trị thành công.');
+    res.status(200).json({ message: 'Diagnosis updated successfully', patient: updatedPatient });
   } catch (error) {
-    res.status(500).send('Lỗi khi cập nhật chẩn đoán.');
+    res.status(500).json({ error: error.message });
   }
 };
 
-exports.requestLabTest = async (req, res) => {
+// Lấy lịch sử tiến trình bệnh nhân
+exports.getPatientHistory = async (req, res) => {
   try {
-    const { patientId, testType } = req.body;
-    await LabResult.create({
-      patient_id: patientId,
-      test_type: testType,
-      status: 'requested',
-    });
-    res.status(200).send('Yêu cầu xét nghiệm đã được gửi.');
+    const { patientId } = req.params;
+    const patient = await Patient.findOne({ where: { id: patientId } });
+    if (!patient) return res.status(404).json({ message: 'Patient not found' });
+    res.status(200).json(patient);
   } catch (error) {
-    res.status(500).send('Lỗi khi yêu cầu xét nghiệm.');
+    res.status(500).json({ error: error.message });
   }
 };

@@ -1,41 +1,30 @@
-const { Patient, Appointment, LabResult } = require('../models');
+const Patient = require('../models/Patient');
+const bcrypt = require('bcryptjs');
 
-exports.getPatientInfo = async (req, res) => {
+// Register Patient
+exports.registerPatient = async (req, res) => {
   try {
-    const patient = await Patient.findOne({ where: { user_id: req.user.id } });
-    res.json(patient);
+    const { name, email, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newPatient = await Patient.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
+    res.status(201).json({ message: 'Patient registered successfully', patient: newPatient });
   } catch (error) {
-    res.status(500).send('Lỗi khi lấy thông tin bệnh nhân.');
+    res.status(500).json({ error: error.message });
   }
 };
 
-exports.getAppointments = async (req, res) => {
+// Get Patient Profile
+exports.getPatientProfile = async (req, res) => {
   try {
-    const appointments = await Appointment.findAll({ where: { patient_id: req.user.id } });
-    res.json(appointments);
+    const { id } = req.params;
+    const patient = await Patient.findOne({ where: { id } });
+    if (!patient) return res.status(404).json({ message: 'Patient not found' });
+    res.status(200).json(patient);
   } catch (error) {
-    res.status(500).send('Lỗi khi lấy danh sách lịch khám.');
-  }
-};
-
-exports.getLabResults = async (req, res) => {
-  try {
-    const labResults = await LabResult.findAll({ where: { patient_id: req.user.id } });
-    res.json(labResults);
-  } catch (error) {
-    res.status(500).send('Lỗi khi lấy kết quả xét nghiệm.');
-  }
-};
-
-exports.updatePatientInfo = async (req, res) => {
-  try {
-    const { age, gender, medical_history, symptoms } = req.body;
-    await Patient.update(
-      { age, gender, medical_history, symptoms },
-      { where: { user_id: req.user.id } }
-    );
-    res.status(200).send('Cập nhật thông tin thành công.');
-  } catch (error) {
-    res.status(500).send('Lỗi khi cập nhật thông tin.');
+    res.status(500).json({ error: error.message });
   }
 };
