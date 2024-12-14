@@ -1,14 +1,54 @@
+import { useState, useEffect } from 'react';
+import Table from '../../components/Table';
+
 export default function AdminDashboard() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      try {
+        const res = await fetch('/api/admin/users');
+        const data = await res.json();
+        setUsers(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    }
+    fetchUsers();
+  }, []);
+
+  const handleDelete = async (userId) => {
+    if (confirm('Bạn có chắc muốn xóa tài khoản này?')) {
+      try {
+        const res = await fetch(`/api/admin/users/${userId}`, {
+          method: 'DELETE',
+        });
+        if (res.ok) {
+          alert('Xóa tài khoản thành công!');
+          setUsers((prev) => prev.filter((user) => user.id !== userId));
+        } else {
+          alert('Có lỗi xảy ra!');
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+      }
+    }
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Quản trị hệ thống</h1>
-      <p>Chức năng này cho phép quản trị viên thực hiện các nhiệm vụ quản lý quan trọng:</p>
-      <ul className="list-disc pl-6">
-        <li>Quản lý thông tin người dùng (bệnh nhân, bác sĩ).</li>
-        <li>Phân quyền và kiểm soát truy cập.</li>
-        <li>Giám sát và thống kê hoạt động của hệ thống.</li>
-        <li>Quản lý tài nguyên bệnh viện như thuốc, vật tư.</li>
-      </ul>
+    <div className="dashboard">
+      <h1>Dashboard Nhân viên Hành chính</h1>
+      <section>
+        <h2>Danh sách người dùng</h2>
+        <Table
+          data={users}
+          renderActions={(user) => (
+            <button onClick={() => handleDelete(user.id)}>Xóa</button>
+          )}
+        />
+      </section>
     </div>
   );
 }

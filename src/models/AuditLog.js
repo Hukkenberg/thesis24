@@ -1,8 +1,8 @@
 const { DataTypes, Model } = require('sequelize');
 
-class Patient extends Model {
+class AuditLog extends Model {
   static initModel(sequelize) {
-    Patient.init(
+    AuditLog.init(
       {
         id: {
           type: DataTypes.UUID,
@@ -13,31 +13,23 @@ class Patient extends Model {
           type: DataTypes.UUID,
           allowNull: false,
         },
-        age: {
-          type: DataTypes.INTEGER,
+        action: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        gender: {
-          type: DataTypes.ENUM('male', 'female', 'other'),
-          allowNull: false,
-        },
-        medical_history: {
-          type: DataTypes.TEXT,
-          allowNull: true,
-        },
-        symptoms: {
+        details: {
           type: DataTypes.TEXT,
           allowNull: true,
         },
       },
       {
         sequelize,
-        modelName: 'Patient',
+        modelName: 'AuditLog',
         timestamps: true,
-        tableName: 'patients',
+        tableName: 'audit_logs',
       }
     );
   }
 }
 
-module.exports = Patient;
+module.exports = AuditLog;
