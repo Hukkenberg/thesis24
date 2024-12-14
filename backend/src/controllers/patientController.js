@@ -1,3 +1,4 @@
+
 const Patient = require('../models/Patient');
 
 exports.getAllPatients = async (req, res) => {
