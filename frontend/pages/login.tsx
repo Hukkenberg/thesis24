@@ -17,25 +17,25 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
+        const response = await fetch(`${API_URL}/api/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
 
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        setError(errorResponse.error || 'Login failed');
-        return;
-      }
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            setError(errorResponse.message || 'Login failed');
+            return;
+        }
 
-      const data = await response.json();
-      router.push('/');
+        const data = await response.json();
+        router.push('/');
     } catch {
-      setError('Unable to connect to server');
+        setError('Unable to connect to server');
     }
   };
 

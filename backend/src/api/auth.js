@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../../models/user');
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/login', async (req, res, next) => {
     try {
@@ -26,18 +26,12 @@ router.post('/login', async (req, res, next) => {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
-        const accessToken = jwt.sign(
-            { id: user.id, role: user.role },
-            JWT_SECRET,
-            { expiresIn: '15m' }
-        );
-
+        const accessToken = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '15m' });
         const refreshToken = jwt.sign({ id: user.id }, JWT_SECRET);
 
         res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
-        console.error('Login error:', error);
-        next(error); // Pass the error to the centralized error handler
+        next(error);
     }
 });
 
