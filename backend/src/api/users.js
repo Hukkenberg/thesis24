@@ -1,4 +1,5 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const { authMiddleware, rbacMiddleware } = require('../../middlewares');
 const { User } = require('../../models/user');
 const router = express.Router();
@@ -21,7 +22,8 @@ router.post('/', authMiddleware, rbacMiddleware(['admin']), async (req, res) => 
     }
 
     try {
-        const user = await User.create({ name, email, password, role });
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const user = await User.create({ name, email, password: hashedPassword, role });
         res.status(201).json(user);
     } catch (err) {
         res.status(500).send('Error creating user');
