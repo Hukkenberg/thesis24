@@ -2,15 +2,27 @@
 import { useEffect, useState } from 'react';
 import { fetchPatientAppointments } from '../../api/patient/appointments';
 
-const PatientAppointments = ({ patientId }) => {
-  const [appointments, setAppointments] = useState([]);
+// Định nghĩa kiểu dữ liệu cho một cuộc hẹn
+type Appointment = {
+  id: string;
+  date: string;
+  status: string;
+};
+
+// Định nghĩa kiểu cho props của component
+type PatientAppointmentsProps = {
+  patientId: string; // Kiểu của patientId
+};
+
+const PatientAppointments = ({ patientId }: PatientAppointmentsProps) => {
+  const [appointments, setAppointments] = useState<Appointment[]>([]); // Gán kiểu cho appointments
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     async function loadAppointments() {
       try {
-        const data = await fetchPatientAppointments(patientId);
+        const data: Appointment[] = await fetchPatientAppointments(patientId); // Đảm bảo API trả về đúng kiểu dữ liệu
         setAppointments(data);
       } catch (err) {
         setError('Không thể tải danh sách cuộc hẹn của bệnh nhân');

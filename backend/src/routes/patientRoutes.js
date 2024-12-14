@@ -1,19 +1,14 @@
+
 const express = require('express');
-const {
-  getAllPatients,
-  createPatient,
-  deletePatient,
-  updatePatient,
-} = require('../controllers/patientController');
-const { authenticate } = require('../middlewares/authenticate');
-const { authorize } = require('../middlewares/roleMiddleware');
+const { getPatients, createPatient, updatePatient, deletePatient } = require('../controllers/patientController');
 const { validatePatientCreation } = require('../validators/patientValidator');
+const { authenticate } = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.get('/', authenticate, authorize(['doctor', 'admin']), getAllPatients);
-router.post('/', authenticate, authorize(['doctor', 'admin']), validatePatientCreation, createPatient);
-router.delete('/:id', authenticate, authorize(['doctor', 'admin']), deletePatient);
-router.put('/:id', authenticate, authorize(['doctor', 'admin']), validatePatientCreation, updatePatient);
+router.get('/', authenticate, getPatients);
+router.post('/', authenticate, validatePatientCreation, createPatient);
+router.put('/:id', authenticate, validatePatientCreation, updatePatient);
+router.delete('/:id', authenticate, deletePatient);
 
 module.exports = router;
