@@ -1,3 +1,5 @@
+const LabResult = require('../models/LabResult');
+
 exports.getAllPatients = async (req, res) => {
     try {
         const patients = await Patient.findAll();
