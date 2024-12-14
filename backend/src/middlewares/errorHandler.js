@@ -1,5 +1,6 @@
-// File: backend/src/middlewares/errorHandler.js
 module.exports = (err, req, res, next) => {
-  console.error(`[${new Date().toISOString()}] Error occurred:`, err.stack);
-  res.status(err.status || 500).json({ error: err.message || 'Internal Server Error' });
+  console.error('Error:', err.message || err);
+  res.status(err.status || 500).json({
+      message: err.message || 'An unexpected error occurred',
+  });
 };
