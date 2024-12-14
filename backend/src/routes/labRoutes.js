@@ -1,11 +1,14 @@
+
 const express = require('express');
-const { getLabResults, updateLabResult } = require('../controllers/labController');
-const { authenticate } = require('../middlewares/authenticate');
-const { authorize } = require('../middlewares/roleMiddleware');
+const { getAllLabReports, getLabReportById, createLabReport, updateLabReport, deleteLabReport } = require('../controllers/labController');
+const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.get('/results', authenticate, authorize(['lab']), getLabResults);
-router.put('/results/:id', authenticate, authorize(['lab']), updateLabResult);
+router.get('/', authenticate, getAllLabReports);
+router.get('/:id', authenticate, getLabReportById);
+router.post('/', authenticate, createLabReport);
+router.put('/:id', authenticate, updateLabReport);
+router.delete('/:id', authenticate, deleteLabReport);
 
 module.exports = router;

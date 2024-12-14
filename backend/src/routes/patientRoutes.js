@@ -1,12 +1,6 @@
 
 const express = require('express');
-const {
-  getAllPatients,
-  getPatientById,
-  createPatient,
-  updatePatient,
-  deletePatient,
-} = require('../controllers/patientController');
+const { getAllPatients, getPatientById, createPatient, updatePatient, deletePatient } = require('../controllers/patientController');
 const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();

@@ -1,11 +1,13 @@
+
 const express = require('express');
-const { getPatients, updateDiagnosis } = require('../controllers/doctorController');
-const { authenticate } = require('../middlewares/authenticate');
-const { authorize } = require('../middlewares/roleMiddleware');
+const { getAllDoctors, createDoctor, updateDoctor, deleteDoctor } = require('../controllers/doctorController');
+const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
 
-router.get('/patients', authenticate, authorize(['doctor']), getPatients);
-router.put('/patients/:id/diagnosis', authenticate, authorize(['doctor']), updateDiagnosis);
+router.get('/', authenticate, getAllDoctors);
+router.post('/', authenticate, createDoctor);
+router.put('/:id', authenticate, updateDoctor);
+router.delete('/:id', authenticate, deleteDoctor);
 
 module.exports = router;

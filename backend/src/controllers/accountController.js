@@ -1,26 +1,28 @@
-const User = require('../models/User');
 
 exports.getAccountDetails = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select('name email role');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    try {
+        const account = await Account.findByPk(req.user.id);
+        if (!account) {
+            return res.status(404).json({ error: 'Account not found' });
+        }
+        res.status(200).json(account);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to retrieve account details' });
     }
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch account details' });
-  }
 };
 
 exports.updateAccount = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const user = await User.findByIdAndUpdate(req.user.id, { name, email }, { new: true }).select('name email role');
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+    try {
+        const { name, email } = req.body;
+        const updatedAccount = await Account.update(
+            { name, email },
+            { where: { id: req.user.id }, returning: true }
+        );
+        if (updatedAccount[0] === 0) {
+            return res.status(404).json({ error: 'Account not found' });
+        }
+        res.status(200).json(updatedAccount[1][0]);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update account' });
     }
-    res.status(200).json(user);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update account details' });
-  }
 };
