@@ -5,7 +5,7 @@ const {
   updateAppointment,
   deleteAppointment,
 } = require('../controllers/appointmentController');
-const { authenticate } = require('../middlewares/authenticate');
+const authenticate = require('../middlewares/authenticate');
 
 const router = express.Router();
 
