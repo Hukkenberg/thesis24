@@ -1,17 +1,24 @@
 const express = require('express');
-const cors = require('cors');
+const { dbConnect } = require('./config/db');
 const routes = require('./routes');
-const errorHandler = require('./middlewares/errorHandler');
+
 const app = express();
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true,
-}));
 app.use(express.json());
+
+dbConnect();
 
 app.use('/api', routes);
 
-app.use(errorHandler);
+app.get('/', (req, res) => {
+  res.status(200).send('API is running');
+});
 
-module.exports = app;
+app.use((req, res) => {
+  res.status(404).send('Route not found');
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

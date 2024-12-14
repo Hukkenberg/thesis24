@@ -1,4 +1,5 @@
 const express = require('express');
+const userRoutes = require('./userRoutes');
 const authRoutes = require('../api/auth');// Fixed path to auth.js
 const patientRoutes = require('./patientRoutes');
 const doctorRoutes = require('./doctorRoutes');
@@ -15,5 +16,9 @@ router.use('/doctors', doctorRoutes);
 router.use('/admins', adminRoutes);
 router.use('/labs', labRoutes);
 router.use('/appointments', appointmentRoutes);
+
+router.get('/test', (req, res) => {
+    res.status(200).send('Test route is working');
+  });
 
 module.exports = router;
