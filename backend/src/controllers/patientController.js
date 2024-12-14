@@ -10,6 +10,20 @@ exports.getAllPatients = async (req, res) => {
   }
 };
 
+// Lấy thông tin chi tiết của một bệnh nhân
+exports.getPatientById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const patient = await Patient.findByPk(id);
+    if (!patient) {
+      return res.status(404).json({ error: 'Bệnh nhân không tồn tại' });
+    }
+    res.status(200).json(patient);
+  } catch (error) {
+    res.status(500).json({ error: 'Không thể tải thông tin bệnh nhân' });
+  }
+};
+
 // Tạo mới một bệnh nhân
 exports.createPatient = async (req, res) => {
   try {
@@ -60,21 +74,7 @@ exports.deletePatient = async (req, res) => {
   }
 };
 
-// Lấy thông tin chi tiết của một bệnh nhân
-exports.getPatientById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const patient = await Patient.findByPk(id);
-    if (!patient) {
-      return res.status(404).json({ error: 'Bệnh nhân không tồn tại' });
-    }
-    res.status(200).json(patient);
-  } catch (error) {
-    res.status(500).json({ error: 'Không thể tải thông tin bệnh nhân' });
-  }
-};
-
-// Theo dõi tiến trình bệnh
+// Theo dõi tiến trình điều trị của bệnh nhân
 exports.trackPatientProgress = async (req, res) => {
   try {
     const { id } = req.params;
@@ -82,9 +82,10 @@ exports.trackPatientProgress = async (req, res) => {
     if (!patient) {
       return res.status(404).json({ error: 'Bệnh nhân không tồn tại' });
     }
-    const progress = await PatientProgress.findAll({ where: { patientId: id } });
+    // Giả định có một bảng "Progress" để lưu tiến trình điều trị
+    const progress = await Progress.findAll({ where: { patientId: id } });
     res.status(200).json(progress);
   } catch (error) {
-    res.status(500).json({ error: 'Không thể theo dõi tiến trình bệnh' });
+    res.status(500).json({ error: 'Không thể theo dõi tiến trình điều trị' });
   }
 };
