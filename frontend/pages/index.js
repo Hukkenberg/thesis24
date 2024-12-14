@@ -24,9 +24,9 @@ export default function Home() {
               <h2>Quản lý tiến trình &rarr;</h2>
               <p>Theo dõi và quản lý tiến trình điều trị.</p>
             </a>
-            <a href="/tools" className="card">
-              <h2>Công cụ &rarr;</h2>
-              <p>Công cụ hỗ trợ các hoạt động quản lý.</p>
+            <a href="/dashboard/admin" className="card">
+              <h2>Quản trị hệ thống &rarr;</h2>
+              <p>Thực hiện các chức năng quản lý quan trọng.</p>
             </a>
           </div>
         </main>
