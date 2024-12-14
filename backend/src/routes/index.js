@@ -1,5 +1,5 @@
 const express = require('express');
-const authRoutes = require('./api/auth'); // Fixed path to auth.js
+const authRoutes = require('../api/auth');// Fixed path to auth.js
 const patientRoutes = require('./patientRoutes');
 const doctorRoutes = require('./doctorRoutes');
 const adminRoutes = require('./adminRoutes');
