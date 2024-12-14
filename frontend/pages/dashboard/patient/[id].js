@@ -15,7 +15,7 @@ export default function PatientDetails({ id }) {
 
 // Pre-render paths for dynamic routes
 export async function getStaticPaths() {
-  const patients = await fetch("https://api.example.com/patients"); // Replace with actual API
+  const patients = await fetch(`${API_BASE_URL}/api/patient/${params.id}`); // Replace with actual API
   const paths = patients.map((patient) => ({
     params: { id: patient.id.toString() }
   }));
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 // Fetch data at build time
 export async function getStaticProps({ params }) {
   const { id } = params;
-  const data = await fetch(`https://api.example.com/patients/${id}`); // Replace with actual API
+  const data = await fetch(`${API_BASE_URL}/api/patient/${params.id}`); // Replace with actual API
   const patient = await data.json();
 
   return {
