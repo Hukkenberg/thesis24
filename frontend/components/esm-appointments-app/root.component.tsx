@@ -1,28 +1,16 @@
-import Navbar from '../../../../shared-components/Navbar';
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AppointmentsCalendarView from './calendar/appointments-calendar-view.component';
-import Appointments from './appointments.component';
-import PatientAppointmentsOverview from './patient-appointments/patient-appointments-overview.component';
 
-const RootComponent: React.FC = () => {
-  const appointmentsBasename = window.getOpenmrsSpaBase() + 'home/appointments';
+import Link from 'next/link';
 
+export default function RootComponent() {
   return (
-    <Navbar />
-    <main>
-      <BrowserRouter basename={appointmentsBasename}>
-        <Routes>
-          <Route path="/" element={<Appointments />} />
-          <Route path="/:date" element={<Appointments />} />
-          <Route path="/:date/:serviceType" element={<Appointments />} />
-          <Route path="/calendar" element={<AppointmentsCalendarView />} />
-          <Route path="/calendar/:date" element={<AppointmentsCalendarView />} />
-          <Route path="/patient/:patientUuid" element={<PatientAppointmentsOverview />} />
-        </Routes>
-      </BrowserRouter>
-    </main>
+    <div>
+      <h1>Appointments</h1>
+      <nav>
+        <Link href="/appointments">Appointments Dashboard</Link>
+      </nav>
+      <main>
+        <h2>Welcome to Appointments Management</h2>
+      </main>
+    </div>
   );
-};
-
-export default RootComponent;
+}

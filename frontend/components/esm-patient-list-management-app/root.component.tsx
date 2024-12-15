@@ -1,21 +1,16 @@
-import Navbar from '../../../../shared-components/Navbar';
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ListDetails from './list-details/list-details.component';
-import ListsDashboard from './lists-dashboard/lists-dashboard.component';
 
-const RootComponent: React.FC = () => {
-  const patientListsBasename = window.getOpenmrsSpaBase() + 'home/patient-lists';
+import Link from 'next/link';
 
+export default function RootComponent() {
   return (
-    <Navbar />
-    <BrowserRouter basename={patientListsBasename}>
-      <Routes>
-        <Route path="/" element={<ListsDashboard />} />
-        <Route path="/:patientListUuid" element={<ListDetails />} />
-      </Routes>
-    </BrowserRouter>
+    <div>
+      <h1>Patient Lists</h1>
+      <nav>
+        <Link href="/patients">Patient Dashboard</Link>
+      </nav>
+      <main>
+        <h2>Welcome to Patient Management</h2>
+      </main>
+    </div>
   );
-};
-
-export default RootComponent;
+}
