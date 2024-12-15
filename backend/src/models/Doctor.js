@@ -1,6 +1,6 @@
 // models/Doctor.js
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database'); // Ensure the correct path to your database config
+const sequelize = require('../config/db'); // Ensure the correct path to your database config
 
 const Doctor = sequelize.define('Doctor', {
   id: {
