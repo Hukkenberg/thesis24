@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
-  },
+    "dev": "nodemon server.js",
+    "build": "cd client && npm install && npm run build"
+  }
   "author": "Arijit Chowdhury",
   "license": "ISC",
   "dependencies": {
