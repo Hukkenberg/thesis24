@@ -1,7 +1,7 @@
-
 {
   "name": "backend",
   "version": "1.0.0",
+  "private": true,
   "main": "app.js",
   "scripts": {
     "build": "npm install",
@@ -15,5 +15,6 @@
     "pg-hstore": "^2.3.4",
     "jsonwebtoken": "^9.0.0",
     "bcrypt": "^5.1.0"
-  }
+  },
+  "devDependencies": {}
 }
