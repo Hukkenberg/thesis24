@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 import { useRouter } from 'next/router';
 
 export default function Login() {
@@ -10,7 +10,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, { email, password });
+      const res = await api.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, { email, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('role', res.data.role);
 

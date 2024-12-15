@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 export default function ManageUsers() {
   const [users, setUsers] = useState([]);
@@ -10,7 +10,7 @@ export default function ManageUsers() {
     const fetchUsers = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
+        const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(res.data);
@@ -26,13 +26,13 @@ export default function ManageUsers() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, newUser, {
+      await api.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, newUser, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('User added successfully!');
       setNewUser({ name: '', email: '', role: '' });
       // Reload users
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
+      const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -45,12 +45,12 @@ export default function ManageUsers() {
   const handleDeleteUser = async (userId) => {
     const token = localStorage.getItem('token');
     try {
-      await axios.delete(`/admin/users/${userId}`, {
+      await api.delete(`/admin/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('User deleted successfully!');
       // Reload users
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
+      const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(res.data);
@@ -64,7 +64,7 @@ export default function ManageUsers() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, { email: resetEmail }, {
+      await api.post(`${process.env.NEXT_PUBLIC_API_URL}$1`, { email: resetEmail }, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert('Password reset link sent!');

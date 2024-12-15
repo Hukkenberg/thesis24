@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 export default function NewAppointment() {
   const [date, setDate] = useState('');
@@ -9,7 +9,7 @@ export default function NewAppointment() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(
+      await api.post(
         `${process.env.NEXT_PUBLIC_API_URL}$1`,
         { date, doctorId },
         { headers: { Authorization: `Bearer ${token}` } }

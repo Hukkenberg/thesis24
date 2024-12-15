@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 export default function Prescriptions() {
   const [prescriptions, setPrescriptions] = useState([]);
@@ -8,7 +8,7 @@ export default function Prescriptions() {
     const fetchPrescriptions = async () => {
       const token = localStorage.getItem('token');
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
+        const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrescriptions(res.data);

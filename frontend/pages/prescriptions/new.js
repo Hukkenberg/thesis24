@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 export default function NewPrescription() {
   const [medicineList, setMedicineList] = useState('');
@@ -9,7 +9,7 @@ export default function NewPrescription() {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-      await axios.post(
+      await api.post(
         `${process.env.NEXT_PUBLIC_API_URL}$1`,
         { medicineList, notes },
         { headers: { Authorization: `Bearer ${token}` } }
