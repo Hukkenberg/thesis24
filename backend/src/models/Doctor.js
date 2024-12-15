@@ -1,3 +1,4 @@
+// models/Doctor.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database'); // Ensure the correct path to your database config
 
@@ -22,6 +23,15 @@ const Doctor = sequelize.define('Doctor', {
     validate: {
       isEmail: true,
     },
+  },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  availability: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'available',
   },
 }, {
   tableName: 'doctors',
