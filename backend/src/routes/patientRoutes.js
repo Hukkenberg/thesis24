@@ -5,7 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-// Use the correct controller method
 router.get('/:id', authMiddleware, patientController.getPatientProfile);
+router.post('/', authMiddleware, patientController.registerPatient); // Added route for registerPatient
 
 module.exports = router;
