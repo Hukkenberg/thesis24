@@ -1,9 +1,15 @@
 
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('postgresql://thesis24_user:fj6Dt3g0yF9h0FNzG267ozLqP1eFRJXg@dpg-ctejt8btq21c73bkgb9g-a.singapore-postgres.render.com/thesis24_database', {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
-  logging: false, // Disable logging for cleaner console output
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false // Allow self-signed certificates
+    }
+  },
+  logging: false // Optional: Disable SQL logging in console
 });
 
 module.exports = sequelize;
