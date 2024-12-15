@@ -1,13 +1,22 @@
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Header() {
+  const [role, setRole] = useState(null);
   const router = useRouter();
-  const role = localStorage.getItem("role");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setRole(localStorage.getItem("role"));
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.clear();
-    router.push("/auth/login");
+    if (typeof window !== "undefined") {
+      localStorage.clear();
+      router.push("/auth/login");
+    }
   };
 
   return (
