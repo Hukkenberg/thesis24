@@ -14,7 +14,7 @@ export default function ManagePatients({ patients }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/patients`);
   const patients = await res.json();
 
