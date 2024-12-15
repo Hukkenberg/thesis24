@@ -1,10 +1,10 @@
 
 const express = require('express');
-const adminController = require('../controllers/adminController');
+const patientController = require('../controllers/patientController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', authMiddleware, adminController.getAllAdmins);
+router.get('/:id', authMiddleware, patientController.getPatientDetails);
 
 module.exports = router;

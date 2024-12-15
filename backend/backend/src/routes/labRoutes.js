@@ -1,10 +1,10 @@
 
 const express = require('express');
-const adminController = require('../controllers/adminController');
+const labController = require('../controllers/labController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/', authMiddleware, adminController.getAllAdmins);
+router.get('/results', authMiddleware, labController.getLabResults);
 
 module.exports = router;

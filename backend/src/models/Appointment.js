@@ -2,36 +2,38 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
-const Patient = sequelize.define('Patient', {
+const Appointment = sequelize.define('Appointment', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    userId: {
+    patientId: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'Patients',
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+    doctorId: {
         type: DataTypes.INTEGER,
         references: {
             model: 'Users',
             key: 'id',
         },
-        onDelete: 'CASCADE',
+        onDelete: 'SET NULL',
     },
-    age: {
-        type: DataTypes.INTEGER,
+    appointmentDate: {
+        type: DataTypes.DATE,
         allowNull: false,
     },
-    gender: {
+    status: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    address: {
-        type: DataTypes.TEXT,
-    },
-    medicalHistory: {
-        type: DataTypes.TEXT,
+        defaultValue: 'pending',
     },
 }, {
     timestamps: true,
 });
 
-module.exports = Patient;
+module.exports = Appointment;
