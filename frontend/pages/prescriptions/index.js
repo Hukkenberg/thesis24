@@ -1,35 +1,24 @@
-import { useEffect, useState } from 'react';
-import api from 'utils/api';
 
-export default function Prescriptions() {
-  const [prescriptions, setPrescriptions] = useState([]);
-
-  useEffect(() => {
-    const fetchPrescriptions = async () => {
-      const token = localStorage.getItem('token');
-      try {
-        const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPrescriptions(res.data);
-      } catch (err) {
-        console.error(err);
-        alert('Failed to load prescriptions');
-      }
-    };
-    fetchPrescriptions();
-  }, []);
-
+export default function Prescriptions({ prescriptions }) {
   return (
     <div>
       <h1>Prescriptions</h1>
       <ul>
-        {prescriptions.map((prescription, index) => (
-          <li key={index}>
-            {prescription.medicineList} - {prescription.notes || 'No notes'}
+        {prescriptions.map((prescription) => (
+          <li key={prescription.id}>
+            {prescription.medicineList} - {prescription.notes || "No notes"}
           </li>
         ))}
       </ul>
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/prescriptions`);
+  const prescriptions = await res.json();
+
+  return {
+    props: { prescriptions },
+  };
 }

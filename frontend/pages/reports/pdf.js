@@ -1,25 +1,14 @@
-import api from 'utils/api';
 
 export default function PDFReport() {
   const handleDownloadPDF = async () => {
-    const token = localStorage.getItem('token');
-    try {
-      const res = await api.get(`${process.env.NEXT_PUBLIC_API_URL}$1`, {
-        headers: { Authorization: `Bearer ${token}` },
-        responseType: 'blob', // Important for binary data
-      });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reports/pdf`);
+    const blob = await res.blob();
 
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'report.pdf'); // Specify the filename
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-    } catch (err) {
-      console.error(err);
-      alert('Failed to download PDF');
-    }
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "report.pdf";
+    a.click();
   };
 
   return (
