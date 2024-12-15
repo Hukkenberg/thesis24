@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../utils/api';
+import api from 'utils/api';
 import { Bar } from 'react-chartjs-2';
 
 export default function Reports() {
