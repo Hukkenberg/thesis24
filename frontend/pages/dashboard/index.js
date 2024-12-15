@@ -1,45 +1,30 @@
-import { useEffect, useState } from 'react';
-import api from 'utils/api';
-import { useRouter } from 'next/router';
+
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 export default function Dashboard() {
-  const [role, setRole] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('role');
+    const role = typeof window !== "undefined" ? localStorage.getItem("role") : null;
 
-    if (!token || !userRole) {
-      router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
-      return;
-    }
-
-    setRole(userRole);
-
-    // Redirect based on role if necessary
-    switch (userRole) {
-      case 'doctor':
-        router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
+    switch (role) {
+      case "doctor":
+        router.push("/dashboard/doctor");
         break;
-      case 'patient':
-        router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
+      case "patient":
+        router.push("/dashboard/patient");
         break;
-      case 'admin':
-        router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
+      case "admin":
+        router.push("/dashboard/admin");
         break;
-      case 'lab':
-        router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
+      case "lab":
+        router.push("/dashboard/lab");
         break;
       default:
-        alert('Unknown role');
-        router.push(`${process.env.NEXT_PUBLIC_API_URL}$1`);
+        router.push("/auth/login");
     }
   }, [router]);
 
-  return (
-    <div>
-      <h1>Loading Dashboard...</h1>
-    </div>
-  );
+  return <div>Loading...</div>; // Temporary placeholder while redirecting
 }
