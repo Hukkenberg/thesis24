@@ -1,41 +1,27 @@
 
-import Link from 'next/link';
+import React from 'react';
 
-export default function Navbar() {
+const Navbar = () => {
   return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-        <div className="text-xl font-bold text-blue-600">
-          <Link href="/">HospitalCare</Link>
-        </div>
-        <ul className="flex space-x-6">
-          <li>
-            <Link href="/dashboard" className="hover:text-blue-500 transition">
-              Dashboard
-            </Link>
-          </li>
-          <li>
-            <Link href="/patients" className="hover:text-blue-500 transition">
-              Patients
-            </Link>
-          </li>
-          <li>
-            <Link href="/appointments" className="hover:text-blue-500 transition">
-              Appointments
-            </Link>
-          </li>
-          <li>
-            <Link href="/profile" className="hover:text-blue-500 transition">
-              Profile
-            </Link>
-          </li>
+    <header>
+      <nav className="navbar">
+        <div className="logo">LOGO</div>
+        <ul className="nav-links">
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/patients">Quản lý Bệnh Nhân</a></li>
+          <li><a href="/process">Quản lý Tiến Trình</a></li>
+          <li><a href="/inventory">Quản lý Kho</a></li>
         </ul>
-        <div>
-          <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
-            Logout
-          </button>
+        <div className="account">
+          <button className="account-btn">Tài khoản ▼</button>
+          <ul className="dropdown">
+            <li><a href="/login">Đăng nhập</a></li>
+            <li><a href="/logout" onClick={() => { localStorage.removeItem('token'); window.location.href = '/'; }}>Đăng xuất</a></li>
+          </ul>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
-}
+};
+
+export default Navbar;
