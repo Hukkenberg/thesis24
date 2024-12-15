@@ -1,18 +1,19 @@
+// adminController.js
 const User = require('../models/User');
 const Patient = require('../models/Patient');
 const Appointment = require('../models/Appointment');
 
-// Lấy danh sách bệnh nhân
-exports.getAllPatients = async (req, res) => {
+// Fetch all administrators (example implementation)
+exports.getAllAdmins = async (req, res) => {
   try {
-    const patients = await Patient.findAll();
-    res.status(200).json({ patients });
+    const admins = await User.findAll({ where: { role: 'admin' } });
+    res.status(200).json({ admins });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Quản lý tài khoản
+// Manage accounts
 exports.manageAccount = async (req, res) => {
   try {
     const { id, role } = req.body;
@@ -23,7 +24,7 @@ exports.manageAccount = async (req, res) => {
   }
 };
 
-// Quản lý lịch khám
+// Manage appointments
 exports.manageAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.findAll();
@@ -33,7 +34,7 @@ exports.manageAppointments = async (req, res) => {
   }
 };
 
-// Tạo báo cáo
+// Generate report
 exports.generateReport = async (req, res) => {
   try {
     const patientCount = await Patient.count();
