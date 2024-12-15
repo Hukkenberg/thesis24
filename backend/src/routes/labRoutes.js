@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
-router.get('/results', authMiddleware, labController.getLabResults);
+// Use the correct controller method
+router.get('/results', authMiddleware, labController.getPendingLabResults);
 
 module.exports = router;
