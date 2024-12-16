@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        \`\${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login\`,
+        `\${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login\`,
         { email, password }
       );
       const { token, role } = response.data;
