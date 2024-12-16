@@ -12,16 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // Import routes
 const authRoutes = require('./routes/auth');
-const sequelize = require('./config/database');
-const User = require('./models/users');
 
 // Use routes
 app.use('/api/auth', authRoutes);
-
-// Sync database
-sequelize.sync({ force: false })
-  .then(() => console.log('Database synced successfully'))
-  .catch(err => console.error('Database sync error:', err));
 
 // Server listening
 const PORT = process.env.PORT || 3000;
