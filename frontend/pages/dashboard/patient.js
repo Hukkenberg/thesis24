@@ -1,36 +1,23 @@
 
-export default function PatientDashboard({ appointments, prescriptions }) {
+export default function PatientDashboard() {
   return (
-    <div>
+    <div style={{ padding: '2rem' }}>
       <h1>Patient Dashboard</h1>
-      <h2>Appointments</h2>
-      <ul>
-        {appointments.map((appointment) => (
-          <li key={appointment.id}>
-            {appointment.date} - {appointment.status}
-          </li>
-        ))}
-      </ul>
-      <h2>Prescriptions</h2>
-      <ul>
-        {prescriptions.map((prescription) => (
-          <li key={prescription.id}>
-            {prescription.medicineList} - {prescription.notes || "No notes"}
-          </li>
-        ))}
-      </ul>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div style={cardStyle}><a href="/appointments">View Appointments</a></div>
+        <div style={cardStyle}><a href="/reports/chart">View Progress Charts</a></div>
+        <div style={cardStyle}><a href="/patients/manage">Manage Personal Data</a></div>
+        <div style={cardStyle}><a href="/reports">View Medical History</a></div>
+      </div>
     </div>
   );
 }
 
-export async function getServerSideProps() {
-  const appointmentsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments`);
-  const appointments = await appointmentsRes.json();
-
-  const prescriptionsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/prescriptions`);
-  const prescriptions = await prescriptionsRes.json();
-
-  return {
-    props: { appointments, prescriptions },
-  };
-}
+const cardStyle = {
+  backgroundColor: '#e6f7ff',
+  padding: '1.5rem',
+  textAlign: 'center',
+  borderRadius: '8px',
+  boxShadow: '0 0 8px rgba(0,0,0,0.1)',
+  fontSize: '1.2rem',
+};
