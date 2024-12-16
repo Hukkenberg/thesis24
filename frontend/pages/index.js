@@ -1,42 +1,44 @@
 
-import React from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 export default function Home() {
+  const [dashboard, setDashboard] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const role = localStorage.getItem('role'); // Mock role retrieval
+    if (!role) router.push('/auth/login');
+
+    const fetchDashboard = async () => {
+      try {
+        const response = await axios.get(
+          process.env.NEXT_PUBLIC_API_BASE_URL + '/api/dashboard/' + role
+        );
+        setDashboard(response.data);
+      } catch (error) {
+        console.error('Error fetching dashboard:', error);
+      }
+    };
+
+    fetchDashboard();
+  }, [router]);
+
+  if (!dashboard) return <p>Loading...</p>;
+
   return (
-    <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f5f5f5', minHeight: '100vh' }}>
-      <nav style={{ backgroundColor: '#000', color: '#fff', padding: '10px 20px', display: 'flex', justifyContent: 'space-between' }}>
-        <div>
-          <a href="/" style={{ color: '#fff', marginRight: '20px', textDecoration: 'none' }}>Trang chủ</a>
-          <a href="/info" style={{ color: '#fff', marginRight: '20px', textDecoration: 'none' }}>Quản lý thông tin</a>
-          <a href="/exam" style={{ color: '#fff', marginRight: '20px', textDecoration: 'none' }}>Quản lý kiểm trình</a>
-          <a href="/tools" style={{ color: '#fff', textDecoration: 'none' }}>Công cụ</a>
-        </div>
-        <div>Tài khoản</div>
-      </nav>
-      <div style={{ backgroundColor: '#3388ff', padding: '40px 20px', textAlign: 'center', color: '#fff' }}>
-        <h1>Hệ thống quản lý</h1>
-        <p>Nâng cao hiệu quả quản lý hệ thống và kiểm trình</p>
-        <button style={{ backgroundColor: '#fff', border: 'none', padding: '10px 20px', fontSize: '16px', cursor: 'pointer' }}>
-          Xem thêm
-        </button>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', margin: '40px 20px' }}>
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', flex: '1', margin: '10px' }}>
-          <h3>Quản lý thông tin</h3>
-          <p>Xem và quản lý thông tin chi tiết cá nhân.</p>
-          <a href="/info" style={{ color: '#3388ff', textDecoration: 'none' }}>Xem chi tiết</a>
-        </div>
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', flex: '1', margin: '10px' }}>
-          <h3>Quản lý kiểm trình</h3>
-          <p>Theo dõi các bài kiểm tra trình độ.</p>
-          <a href="/exam" style={{ color: '#3388ff', textDecoration: 'none' }}>Xem chi tiết</a>
-        </div>
-        <div style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '8px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', flex: '1', margin: '10px' }}>
-          <h3>Công cụ</h3>
-          <p>Cung cấp tiện ích hỗ trợ công việc của bạn.</p>
-          <a href="/tools" style={{ color: '#3388ff', textDecoration: 'none' }}>Xem chi tiết</a>
-        </div>
-      </div>
+    <div style={{ padding: '2rem' }}>
+      <h1>{dashboard.message}</h1>
+      <ul style={{ listStyle: 'none', padding: 0 }}>
+        {dashboard.links.map((link, index) => (
+          <li key={index} style={{ marginBottom: '1rem' }}>
+            <a href={link.url} style={{ fontSize: '1.2rem', color: '#007bff' }}>
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,30 +1,33 @@
 
 const express = require('express');
 const cors = require('cors');
-const app = express();
-
-// Enable CORS for all routes
-app.use(cors());
-
-// Middleware for JSON parsing
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Import routes and models
+const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
-const sequelize = require('./config/database');
-const User = require('./models/users');
+const dashboardRoutes = require('./routes/dashboard');
+const patientsRoutes = require('./routes/patients');
+const labResultsRoutes = require('./routes/labResults');
+const adminToolsRoutes = require('./routes/adminTools');
+const auth = require('./middleware/auth');
+const roleAuth = require('./middleware/roleAuth');
+const { sequelize } = require('./models');
 
-// Use routes
-app.use('/api/auth', authRoutes);
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
-// Sync database
-sequelize.sync({ alter: true }) // Alter sync ensures schema matches the model
-  .then(() => console.log('Database synced successfully'))
-  .catch(err => console.error('Database sync error:', err));
+app.use('/api/auth', authRoutes); // Authentication route
+app.use('/api/dashboard', auth, dashboardRoutes); // Protect dashboard route
 
-// Server listening
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.use('/api/patients', auth, roleAuth(['doctor', 'admin']), patientsRoutes);
+app.use('/api/lab-results', auth, roleAuth(['lab', 'admin']), labResultsRoutes);
+app.use('/api/admin/tools', auth, roleAuth(['admin']), adminToolsRoutes);
+
+// Database sync
+sequelize.sync().then(() => {
+  console.log('Database synced successfully');
+}).catch((error) => {
+  console.error('Database sync failed:', error);
 });
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
