@@ -1,25 +1,18 @@
 
 const express = require('express');
 const router = express.Router();
-const { Users } = require('../models');
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await Users.findOne({ where: { email, password } });
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
+    // Simulated account verification for testing
+    if (email === 'admin@mail.com' && password === '123456') {
+      return res.json({ token: 'mock-token', role: 'admin' });
     }
-
-    res.json({
-      message: 'Login successful',
-      user: { id: user.id, name: user.name, role: user.role },
-      token: 'mock-jwt-token' // Replace with real JWT logic in production
-    });
-  } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return res.status(401).json({ message: 'Invalid email or password' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
