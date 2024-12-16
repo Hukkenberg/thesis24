@@ -1,8 +1,6 @@
 
 export default function DoctorDashboard() {
-export default function DoctorDashboard() {
   return (
-    <div style={{ padding: '2rem' }}>
     <div style={{ padding: '2rem' }}>
       <h1>Doctor Dashboard</h1>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
