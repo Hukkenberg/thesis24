@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Import routes
+// Import routes and models
 const authRoutes = require('./routes/auth');
 const sequelize = require('./config/database');
 const User = require('./models/users');
@@ -19,7 +19,7 @@ const User = require('./models/users');
 app.use('/api/auth', authRoutes);
 
 // Sync database
-sequelize.sync({ force: false })
+sequelize.sync({ alter: true }) // Alter sync ensures schema matches the model
   .then(() => console.log('Database synced successfully'))
   .catch(err => console.error('Database sync error:', err));
 
