@@ -1,24 +1,14 @@
 
-export default function DoctorDashboard({ patients }) {
+export default function DoctorDashboard() {
   return (
-    <div>
+    <div style={{ padding: '2rem' }}>
       <h1>Doctor Dashboard</h1>
       <ul>
-        {patients.map((patient) => (
-          <li key={patient.id}>
-            {patient.name} - {patient.contactNumber}
-          </li>
-        ))}
+        <li><a href="/patients">Manage Patients</a></li>
+        <li><a href="/appointments">View Appointments</a></li>
+        <li><a href="/reports/chart">Progress Charts</a></li>
+        <li><a href="/prescriptions">Manage Prescriptions</a></li>
       </ul>
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/patients`);
-  const patients = await res.json();
-
-  return {
-    props: { patients },
-  };
 }
