@@ -4,15 +4,25 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
+const patientsRoutes = require('./routes/patients');
+const labResultsRoutes = require('./routes/labResults');
+const adminToolsRoutes = require('./routes/adminTools');
+const auth = require('./middleware/auth');
+const roleAuth = require('./middleware/roleAuth');
 const { sequelize } = require('./models');
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/api/auth', authRoutes); // Corrected route for auth
-app.use('/api', dashboardRoutes); // Dashboard route
+app.use('/api/auth', authRoutes); // Authentication route
+app.use('/api/dashboard', auth, dashboardRoutes); // Protect dashboard route
 
+app.use('/api/patients', auth, roleAuth(['doctor', 'admin']), patientsRoutes);
+app.use('/api/lab-results', auth, roleAuth(['lab', 'admin']), labResultsRoutes);
+app.use('/api/admin/tools', auth, roleAuth(['admin']), adminToolsRoutes);
+
+// Database sync
 sequelize.sync().then(() => {
   console.log('Database synced successfully');
 }).catch((error) => {
