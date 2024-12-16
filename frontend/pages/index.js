@@ -1,44 +1,52 @@
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 
-export default function Home() {
-  const [dashboard, setDashboard] = useState(null);
+const Home = () => {
+  const [role, setRole] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    const role = localStorage.getItem('role'); // Mock role retrieval
-    if (!role) router.push('/auth/login');
-
-    const fetchDashboard = async () => {
-      try {
-        const response = await axios.get(
-          process.env.NEXT_PUBLIC_API_BASE_URL + '/api/dashboard/' + role
-        );
-        setDashboard(response.data);
-      } catch (error) {
-        console.error('Error fetching dashboard:', error);
-      }
-    };
-
-    fetchDashboard();
+    const storedRole = localStorage.getItem('role');
+    if (!storedRole) {
+      router.push('/auth/login');
+    } else {
+      setRole(storedRole);
+    }
   }, [router]);
 
-  if (!dashboard) return <p>Loading...</p>;
+  const roleSections = {
+    admin: [
+      { title: 'Quản lý thông tin', link: '/patients' },
+      { title: 'Công cụ', link: '/admin/tools' },
+    ],
+    doctor: [
+      { title: 'Quản lý bệnh nhân', link: '/patients' },
+      { title: 'Lịch hẹn', link: '/appointments' },
+    ],
+    lab: [
+      { title: 'Quản lý kiểm trình', link: '/lab-results' },
+      { title: 'Lịch trình xét nghiệm', link: '/appointments' },
+    ],
+    patient: [
+      { title: 'Thông tin cá nhân', link: '/patients/manage' },
+      { title: 'Lịch khám', link: '/appointments' },
+    ],
+  };
+
+  const sections = roleSections[role] || [];
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>{dashboard.message}</h1>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
-        {dashboard.links.map((link, index) => (
-          <li key={index} style={{ marginBottom: '1rem' }}>
-            <a href={link.url} style={{ fontSize: '1.2rem', color: '#007bff' }}>
-              {link.name}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <div>
+      <h1>Hệ thống quản lý</h1>
+      {sections.map((section, index) => (
+        <div key={index}>
+          <h3>{section.title}</h3>
+          <a href={section.link}>Xem chi tiết</a>
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default Home;
